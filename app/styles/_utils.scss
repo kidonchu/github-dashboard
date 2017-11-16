@@ -1,0 +1,30 @@
+.red {
+	color: #f44336;
+}
+
+.green {
+	color: #4caf50;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.clearfix:after {
+	clear: both;
+	content: "";
+	display: table;
+	height: 0;
+	visibility: hidden;
+}
+
+.img-circle {
+	border-radius: 100%;
+}
+
+.text-center {
+	text-align: center;
+}
+.text-right {
+	text-align: right;
+}

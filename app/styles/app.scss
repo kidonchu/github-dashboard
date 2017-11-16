@@ -1,0 +1,13 @@
+@import './global';
+@import 'node_modules/gridlex/src/gridlex';
+@import './components/pull-card';
+
+a {
+	text-decoration: none;
+}
+
+.pulls {
+	padding-top: 30px;
+	margin: 0 auto;
+	max-width: 800px;
+}

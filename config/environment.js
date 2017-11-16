@@ -24,12 +24,22 @@ module.exports = function(environment) {
     }
   };
 
+	// Load AIP keys and other secrets from dotenv file
+	try {
+		let dotenv = require('./dotenv.js');
+
+		Object.keys(dotenv).forEach(function(key) {
+			ENV[key] = dotenv[key];
+		});
+	} catch(err) {
+		console.error(err);
+		console.log("config/dotenv.js not found");
+	}
+
   if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+	  ENV['ember-cli-mirage'] = {
+		  enabled: false
+	  };
   }
 
   if (environment === 'test') {
@@ -44,8 +54,12 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+	  ENV['ember-cli-mirage'] = {
+		  enabled: false
+	  };
   }
 
   return ENV;
 };
+
+// vim: set shiftwidth=2 expandtab tabstop=2:

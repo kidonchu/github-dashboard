@@ -1,0 +1,28 @@
+/**
+ * Because fuck anything else.
+ */
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+/**
+ * Set the root element to display the crispest possible edge. Produces cleaner
+ * edges for high resolution screens, especially for typography.
+ */
+html {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-tap-highlight-color: transparent;
+}
+
+/**
+ * Make images responsive by default
+ */
+img {
+	height: auto;
+	width: 100%;
+}

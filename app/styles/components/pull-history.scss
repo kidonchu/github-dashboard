@@ -1,0 +1,32 @@
+.pull-history {
+
+	position: fixed;
+	top: 65px;
+
+	background-image: linear-gradient(
+		to bottom,
+		transparentize($base02, 0.5),
+		transparentize($base03, 0.5)
+	), linear-gradient(
+		to bottom,
+		$base02,
+		$base02
+	);
+	padding: 1em;
+
+	.author {
+		font-weight: bold;
+	}
+
+	.img-avatar {
+		border: 0.13333em solid $base03;
+		width: 100%;
+	}
+	.created-at {
+		color: $base2;
+		font-size: .8em;
+		vertical-align: middle;
+		margin-top: 5px;
+		text-align: right;
+	}
+}

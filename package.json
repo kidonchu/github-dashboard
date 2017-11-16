@@ -20,6 +20,7 @@
     "ember-ajax": "^3.0.0",
     "ember-cli": "~2.16.2",
     "ember-cli-app-version": "^3.0.0",
+    "ember-cli-autoprefixer": "^0.8.1",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-eslint": "^4.0.0",
@@ -48,6 +49,7 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "dependencies": {
-    "octicons": "^7.0.1"
+    "octicons": "^6.0.0",
+    "typeplate-starter-kit": "^3.0.2"
   }
 }
