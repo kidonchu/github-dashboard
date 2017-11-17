@@ -19,7 +19,7 @@ export default GithubSerializer.extend({
 				author: hash.user.url,
 				baseRepo: hash.base.repo.url,
 				reviews: hash.url + '/reviews',
-				comments: hash.issue_url + '/comments',
+				comments: hash.comments_url,
 			}
 		};
 
