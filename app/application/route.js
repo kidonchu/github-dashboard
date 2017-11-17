@@ -10,7 +10,7 @@ export default Route.extend({
 		return new Promise((resolve, reject) => {
 			this.store.findRecord('organization', ENV.ORGANIZATION).then(org => {
 				hash({
-					activeCampaign: org,
+					organization: org,
 					repos: org.get('repositories'),
 				}).then(hash => resolve(hash));
 			}).catch(err => reject(err));
