@@ -50,8 +50,8 @@ export default DS.Model.extend({
 	baseRepo: DS.belongsTo('repository', {async: true}),
 
 	description: computed('body', function() {
-		let description = this.get('body').replace(/[\s]?### Description[\s]*/, '');
-		description = description.replace(/[\s]?### Acceptance criteria[\s\S]*$/, '');
+		let description = this.get('body').replace(/[\s]?[#]+ Description[\s]*/i, '');
+		description = description.replace(/[\s]?[#]+ Acceptance criteria[\s\S]*$/i, '');
 		return description;
 	}),
 
