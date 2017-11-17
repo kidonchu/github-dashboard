@@ -1,3 +1,7 @@
 module.exports = {
 	GITHUB_ACCESS_TOKEN: 'Your GitHub API token here'
+	ORGANIZATION: 'kidon-org',
+	WHITELISTED_REPOS: [
+		'gitcli', 'github-dashboard', 'jira-comeon'
+	]
 };
