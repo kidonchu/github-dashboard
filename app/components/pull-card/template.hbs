@@ -6,8 +6,16 @@
 			</a>
 		</div>
 		<div class="col-11">
-			<div class="createdAt">
-				{{moment-from-now pull.createdAt}}
+			<div class="info">
+				<div class="grid-noBottom">
+					<div class="col-8">
+						<a href="{{pull.baseRepo.htmlUrl}}" target="_blank">#{{pull.baseRepo.name}}</a>
+						<a href="{{pull.htmlUrl}}" target="_blank">#{{pull.number}}</a>
+					</div>
+					<div class="col-4 createdAt">
+						{{moment-from-now pull.createdAt}}
+					</div>
+				</div>
 			</div>
 			<div class="title">
 				<a href="{{pull.htmlUrl}}" target="_blank">{{pull.title}}</a>

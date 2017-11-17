@@ -14,15 +14,6 @@ export default Component.extend({
 	commentValue: '',
 
 	/**
-	 * @property attributeBindings
-	 * @type {String[]}
-	 * @default ['pull.title:title']
-	 */
-	attributeBindings: [
-		'pull.title:title'
-	],
-
-	/**
 	 * @property isShowingAllComments
 	 * @type {Boolean}
 	 * @default false
