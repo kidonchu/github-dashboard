@@ -45,7 +45,7 @@ export default [
 		merged_at: null,
 		number: 2345,
 		state: "open",
-		title: "Check Github Dashboard out!",
+		title: "I'm going to make him an offer he can't refuse",
 		updated_at: "2017-09-16T13:23:26Z",
 		url: "https://api.github.com/repos/kidonchu/github-dashboard/pulls/2345",
 		user: {
@@ -72,7 +72,7 @@ export default [
 		merged_at: null,
 		number: 3456,
 		state: "open",
-		title: "Check Github Dashboard out!",
+		title: "May the Force be with you",
 		updated_at: "2017-11-16T13:23:26Z",
 		url: "https://api.github.com/repos/kidonchu/github-dashboard/pulls/3456",
 		user: {

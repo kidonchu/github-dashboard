@@ -1,26 +1,66 @@
+import users from '../mirage/apidata/get_users';
+import org from '../mirage/apidata/get_organization';
+import repos from '../mirage/apidata/get_repos';
+import pulls from '../mirage/apidata/get_pulls';
+import reviews from '../mirage/apidata/get_reviews';
+import comments from '../mirage/apidata/get_comments';
+import createComment from '../mirage/apidata/create_comment';
+
 export default function() {
+	this.logging = false;
+	this.urlPrefix = 'https://api.github.com';
 
-  // These comments are here to help you get started. Feel free to delete them.
+	this.get('/users/:username', (db, request) => {
+		let username = request.params.username;
+		return users.find(function(user) {
+			return user.login === username;
+		});
+	});
 
-  /*
-    Config (with defaults).
+	this.get('/repos/kidonchu/:repo/pulls', (db, request) => {
+		let repo = request.params.repo;
+		return pulls.filter(function(p) {
+			return p.base.repo.name === repo;
+		});
+	});
 
-    Note: these only affect routes defined *after* them!
-  */
+	this.get('/repos/kidonchu/:repo/pulls/:pullId/reviews', (db, request) => {
+		let repo = request.params.repo;
+		let pullId = request.params.pullId;
+		let re = new RegExp(repo + "\/pulls\/" + pullId);
+		return reviews.filter(function(r) {
+			return re.test(r.pull_request_url);
+		});
+	});
 
-  // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server
-  // this.namespace = '';    // make this `/api`, for example, if your API is namespaced
-  // this.timing = 400;      // delay for each request, automatically set to 0 during testing
+	this.get('/repos/kidonchu/:repo/issues/:issueId/comments', (db, request) => {
+		let repo = request.params.repo;
+		let issueId = request.params.issueId;
+		let re = new RegExp(repo + "\/issues\/" + issueId);
+		return comments.filter(function(r) {
+			return re.test(r.issue_url);
+		});
+	});
 
-  /*
-    Shorthand cheatsheet:
+	this.get('/orgs/kidonchu/repos', () => {
+		return repos;
+	});
 
-    this.get('/posts');
-    this.post('/posts');
-    this.get('/posts/:id');
-    this.put('/posts/:id'); // or this.patch
-    this.del('/posts/:id');
+	this.get('/repos/kidonchu/:repo', (db, request) => {
+		let repo = request.params.repo;
+		return repos.find(function(r) {
+			return r.name === repo;
+		});
+	});
 
-    http://www.ember-cli-mirage.com/docs/v0.3.x/shorthands/
-  */
+	this.get('/orgs/:organization', () => {
+		return org;
+	});
+
+	this.post('/repos/kidonchu/:repo/issues/:issueId/comments', (db, request) => {
+		let repo = request.params.repo;
+		let issueId = request.params.issueId;
+		let comment = request.requestBody.split('=')[1];
+		return createComment(repo, issueId, comment);
+	});
 }

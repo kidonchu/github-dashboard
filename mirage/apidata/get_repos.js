@@ -1,6 +1,6 @@
 export default [
 	{
-		"id": 111009240,
+		"id": 1,
 		"name": "github-dashboard",
 		"full_name": "kidonchu/github-dashboard",
 		"owner": {
@@ -18,7 +18,7 @@ export default [
 		"default_branch": "master"
 	},
 	{
-		"id": 89027797,
+		"id": 2,
 		"name": "gitcli",
 		"full_name": "kidonchu/gitcli",
 		"owner": {
