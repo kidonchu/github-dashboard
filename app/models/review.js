@@ -12,14 +12,19 @@ export default DS.Model.extend({
 	fullBody: computed('state', 'body', function() {
 		switch(this.get('state')) {
 			case 'commented':
-				return this.get('body');
+				if(this.get('body')) {
+					return Ember.String.htmlSafe(
+						`<span class="orange bold">reviewed.</span> ${this.get('body')}`
+					);
+				}
+				return '';
 			case 'approved':
 				return Ember.String.htmlSafe(
-					`<span class="green bold">approved.</span> ` + this.get('body')
+					`<span class="green bold">approved.</span> ${this.get('body')}`
 				);
 			case 'changes_requested':
 				return Ember.String.htmlSafe(
-					`<span class="red bold">requested changes.</span> ` + this.get('body')
+					`<span class="red bold">requested changes.</span> ${this.get('body')}`
 				);
 		}
 		return '';
