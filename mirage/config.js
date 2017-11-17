@@ -24,6 +24,15 @@ export default function() {
 		});
 	});
 
+	this.get('/repos/kidonchu/:repo/pulls/:pullId', (db, request) => {
+		let pullId = parseInt(request.params.pullId, 10);
+		let pull = pulls.find((pull) =>  {
+			return pull.number === pullId;
+		});
+		pull.updated_at = (new Date()).toISOString();
+		return pull;
+	});
+
 	this.get('/repos/kidonchu/:repo/pulls/:pullId/reviews', (db, request) => {
 		let repo = request.params.repo;
 		let pullId = request.params.pullId;
@@ -60,7 +69,7 @@ export default function() {
 	this.post('/repos/kidonchu/:repo/issues/:issueId/comments', (db, request) => {
 		let repo = request.params.repo;
 		let issueId = request.params.issueId;
-		let comment = request.requestBody.split('=')[1];
-		return createComment(repo, issueId, comment);
+		let comment = JSON.parse(request.requestBody);
+		return createComment(repo, issueId, comment.body);
 	});
 }

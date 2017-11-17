@@ -22,6 +22,7 @@ export default [
 		updated_at: "2017-06-13T13:23:26Z",
 		url: "https://api.github.com/repos/kidonchu/gitcli/pulls/1234",
 		user: {
+			avatar_url: "https://avatars1.githubusercontent.com/u/1875398?v=3",
 			"login": "kidonchu",
 			"url": "https://api.github.com/users/kidonchu"
 		}
@@ -49,6 +50,7 @@ export default [
 		updated_at: "2017-09-16T13:23:26Z",
 		url: "https://api.github.com/repos/kidonchu/github-dashboard/pulls/2345",
 		user: {
+			avatar_url: "https://avatars1.githubusercontent.com/u/1875398?v=3",
 			"login": "kidonchu",
 			"url": "https://api.github.com/users/kidonchu"
 		}
@@ -76,6 +78,7 @@ export default [
 		updated_at: "2017-11-16T13:23:26Z",
 		url: "https://api.github.com/repos/kidonchu/github-dashboard/pulls/3456",
 		user: {
+			avatar_url: "https://avatars1.githubusercontent.com/u/1875398?v=3",
 			"login": "kidonchu",
 			"url": "https://api.github.com/users/kidonchu"
 		}
