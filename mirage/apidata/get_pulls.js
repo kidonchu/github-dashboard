@@ -10,7 +10,7 @@ export default [
 				url: `https://api.github.com/repos/${ENV.ORGANIZATION}/gitcli`,
 			}
 		},
-		body: "",
+		body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rhoncus lorem eget tortor ultricies ornare. Sed velit velit, porttitor eget iaculis ullamcorper, euismod eget enim.\r\n\r\nPraesent nec ullamcorper nisl, at faucibus nisi. In mattis a magna sit amet volutpat. Maecenas maximus odio metus, sit amet pretium eros malesuada eget. Duis vel malesuada est, sed semper nisi.",
 		closed_at: null,
 		comments_url: `https://api.github.com/repos/${ENV.ORGANIZATION}/gitcli/issues/1234/comments`,
 		created_at: "2017-06-12T21:53:37Z",
@@ -38,7 +38,7 @@ export default [
 				url: `https://api.github.com/repos/${ENV.ORGANIZATION}/github-dashboard`,
 			}
 		},
-		body: "",
+		body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rhoncus lorem eget tortor ultricies ornare. Sed velit velit, porttitor eget iaculis ullamcorper, euismod eget enim.\r\n\r\nPraesent nec ullamcorper nisl, at faucibus nisi. In mattis a magna sit amet volutpat. Maecenas maximus odio metus, sit amet pretium eros malesuada eget. Duis vel malesuada est, sed semper nisi.",
 		closed_at: null,
 		comments_url: `https://api.github.com/repos/${ENV.ORGANIZATION}/github-dashboard/issues/2345/comments`,
 		created_at: "2017-09-15T21:53:37Z",
@@ -66,7 +66,7 @@ export default [
 				url: `https://api.github.com/repos/${ENV.ORGANIZATION}/github-dashboard`,
 			}
 		},
-		body: "",
+		body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rhoncus lorem eget tortor ultricies ornare. Sed velit velit, porttitor eget iaculis ullamcorper, euismod eget enim.\r\n\r\nPraesent nec ullamcorper nisl, at faucibus nisi. In mattis a magna sit amet volutpat. Maecenas maximus odio metus, sit amet pretium eros malesuada eget. Duis vel malesuada est, sed semper nisi.",
 		closed_at: null,
 		comments_url: `https://api.github.com/repos/${ENV.ORGANIZATION}/github-dashboard/issues/3456/comments`,
 		created_at: "2017-11-15T21:53:37Z",
