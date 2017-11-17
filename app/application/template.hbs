@@ -1,0 +1,12 @@
+<section class="pulls">
+	<div class="grid">
+		{{#each filteredPulls as |pull|}}
+			<div class="col-12">
+				{{pull-card
+					pull=pull
+					addComment=(action 'addComment')
+				}}
+			</div>
+		{{/each}}
+	</div>
+</section>
