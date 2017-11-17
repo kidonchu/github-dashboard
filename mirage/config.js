@@ -1,3 +1,4 @@
+import ENV from 'github-dashboard/config/environment';
 import users from '../mirage/apidata/get_users';
 import org from '../mirage/apidata/get_organization';
 import repos from '../mirage/apidata/get_repos';
@@ -17,14 +18,14 @@ export default function() {
 		});
 	});
 
-	this.get('/repos/kidonchu/:repo/pulls', (db, request) => {
+	this.get(`/repos/${ENV.ORGANIZATION}/:repo/pulls`, (db, request) => {
 		let repo = request.params.repo;
 		return pulls.filter(function(p) {
 			return p.base.repo.name === repo;
 		});
 	});
 
-	this.get('/repos/kidonchu/:repo/pulls/:pullId', (db, request) => {
+	this.get(`/repos/${ENV.ORGANIZATION}/:repo/pulls/:pullId`, (db, request) => {
 		let pullId = parseInt(request.params.pullId, 10);
 		let pull = pulls.find((pull) =>  {
 			return pull.number === pullId;
@@ -33,7 +34,7 @@ export default function() {
 		return pull;
 	});
 
-	this.get('/repos/kidonchu/:repo/pulls/:pullId/reviews', (db, request) => {
+	this.get(`/repos/${ENV.ORGANIZATION}/:repo/pulls/:pullId/reviews`, (db, request) => {
 		let repo = request.params.repo;
 		let pullId = request.params.pullId;
 		let re = new RegExp(repo + "\/pulls\/" + pullId);
@@ -42,7 +43,7 @@ export default function() {
 		});
 	});
 
-	this.get('/repos/kidonchu/:repo/issues/:issueId/comments', (db, request) => {
+	this.get(`/repos/${ENV.ORGANIZATION}/:repo/issues/:issueId/comments`, (db, request) => {
 		let repo = request.params.repo;
 		let issueId = request.params.issueId;
 		let re = new RegExp(repo + "\/issues\/" + issueId);
@@ -51,11 +52,11 @@ export default function() {
 		});
 	});
 
-	this.get('/orgs/kidonchu/repos', () => {
+	this.get(`/orgs/${ENV.ORGANIZATION}/repos`, () => {
 		return repos;
 	});
 
-	this.get('/repos/kidonchu/:repo', (db, request) => {
+	this.get(`/repos/${ENV.ORGANIZATION}/:repo`, (db, request) => {
 		let repo = request.params.repo;
 		return repos.find(function(r) {
 			return r.name === repo;
@@ -66,7 +67,7 @@ export default function() {
 		return org;
 	});
 
-	this.post('/repos/kidonchu/:repo/issues/:issueId/comments', (db, request) => {
+	this.post(`/repos/${ENV.ORGANIZATION}/:repo/issues/:issueId/comments`, (db, request) => {
 		let repo = request.params.repo;
 		let issueId = request.params.issueId;
 		let comment = JSON.parse(request.requestBody);
