@@ -3,5 +3,11 @@ module.exports = {
 	ORGANIZATION: 'kidon-org',
 	WHITELISTED_REPOS: [
 		'gitcli', 'github-dashboard', 'jira-comeon'
+	],
+	REPO_FILTERS: [
+		'gitcli', 'github-dashboard'
+	],
+	USER_FILTERS: [
+		'kidonchu', 'kvann'
 	]
 };
