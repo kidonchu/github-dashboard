@@ -49,6 +49,12 @@ export default DS.Model.extend({
 	comments: DS.hasMany('comment', {async: true}),
 	baseRepo: DS.belongsTo('repository', {async: true}),
 
+	description: computed('body', function() {
+		let description = this.get('body').replace(/[\s]?### Description[\s]*/, '');
+		description = description.replace(/[\s]?### Acceptance criteria[\s\S]*$/, '');
+		return description;
+	}),
+
 	lastReviewState: computed('reviews.isFulfilled', 'reviews.content.isLoaded', function() {
 		if(!this.get('reviews.isFulfilled') || !this.get('reviews.content.isLoaded')) {
 			this.get('reviews');

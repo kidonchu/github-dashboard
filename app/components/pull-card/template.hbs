@@ -1,4 +1,4 @@
-<div class="components_pull-card_body">
+<div class="components_pull-card_header">
 	<div class="grid-noBottom">
 		<div class="col-1">
 			<a href="{{pull.author.htmlUrl}}" target="_blank" class="avatar ">
@@ -14,6 +14,14 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="components_pull-card_body">
+	{{md-text
+		text=pull.description
+		linkify=true
+		break=true
+		html=true
+	}}
 </div>
 <div class="components_pull-card__footer">
 	<div class="comments">

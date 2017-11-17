@@ -8,7 +8,7 @@
 	line-height: 18px;
 }
 
-.components_pull-card_body {
+.components_pull-card_header {
 	padding: 16px 16px 16px 21px;
 	color: #757575;
 	border-bottom: 1px solid #efefef;
@@ -50,6 +50,28 @@
 		font-size: 1.4em;
 		font-weight: bold;
 		line-height: 1.222em;
+	}
+}
+
+.components_pull-card_body {
+	padding: 16px 16px 16px 21px;
+	color: #212121;
+	border-bottom: 1px solid #efefef;
+
+	a, a:visited {
+		color: #757575;
+	}
+	a:hover {
+		color: #424242;
+	}
+
+	p {
+		margin-bottom: 0.5rem;
+
+		& + p {
+			text-indent: 0;
+			margin-top: 0;
+		}
 	}
 }
 
