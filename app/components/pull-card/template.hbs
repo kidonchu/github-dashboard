@@ -1,0 +1,64 @@
+<div class="components_pull-card_body">
+	<div class="grid-noBottom">
+		<div class="col-1">
+			<a href="{{pull.author.htmlUrl}}" target="_blank" class="avatar ">
+				<img src="{{pull.userAvatarUrl}}" alt="avatar">
+			</a>
+		</div>
+		<div class="col-11">
+			<div class="createdAt">
+				{{moment-from-now pull.createdAt}}
+			</div>
+			<div class="title">
+				<a href="{{pull.htmlUrl}}" target="_blank">{{pull.title}}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="components_pull-card__footer">
+	<div class="comments">
+		<ul>
+			{{pull-card/pull-comment
+				author=pull.author.login
+				authorName=pull.author.name
+				comment=pullFirstComment
+			}}
+			{{#if isShowingAllComments}}
+				{{#each comments as |comment|}}
+					{{pull-card/pull-comment
+						author=comment.author
+						authorName=comment.authorName
+						comment=comment.body
+					}}
+				{{/each}}
+			{{else}}
+				{{#if hasMultipleComments}}
+					<li class="view-more" {{action 'showAllComments'}}>
+						View all {{numComments}} comments
+					</li>
+				{{/if}}
+				{{#if lastComments}}
+					{{#each lastComments as |comment|}}
+						{{pull-card/pull-comment
+							author=comment.author
+							authorName=comment.authorName
+							comment=comment.body
+						}}
+					{{/each}}
+				{{/if}}
+			{{/if}}
+		</ul>
+	</div>
+	<div class="updatedAt">
+		{{moment-from-now pull.updatedAt}}
+	</div>
+	<section class="components_pull-card__add-comment">
+		{{textarea
+			placeholder='Add a comment...'
+			value=commentValue
+			keyDown=(action 'onCommentKeyDown')
+		}}
+	</section>
+</div>
+<div class="components_pull-card__status-bar {{statusClass}}">
+</div>
