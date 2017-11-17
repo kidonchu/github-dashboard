@@ -54,8 +54,10 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    ENV.rootURL = '/github-dashboard';
+    ENV.locationType = 'hash';
 	  ENV['ember-cli-mirage'] = {
-		  enabled: false
+		  enabled: true
 	  };
   }
 
