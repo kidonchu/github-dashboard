@@ -15,6 +15,14 @@ export default Controller.extend({
 
 	pulls: [],
 
+	state: '',
+	author: '',
+	team: '',
+
+	stateOptions: ['Approved', 'Changes Requested', 'In Progress', 'Waiting'],
+	teamOptions: ENV.TEAM_FILTERS,
+	authorOptions: ENV.USER_FILTERS,
+
 	numPulls: computed('filteredPulls.[]', function() {
 		return this.get('filteredPulls').length;
 	}),
@@ -26,22 +34,56 @@ export default Controller.extend({
 	 * @type {Model.Pull[]}
 	 */
 	filteredPulls: computed(
-		'pulls.@each.{title,state,author}',
+		'author', 'state', 'team',
+		'pulls.@each.{title,state,authorLogin}',
 		function() {
+
+			// apply whitelist filters
 			let pulls = this.get('pulls').filter((pull) =>  {
 
 				// repo filter
-				if(ENV.REPO_FILTERS.indexOf(pull.get('baseRepo.name')) !== -1) {
+				if(ENV.DEFAULT_REPO_FILTERS.indexOf(pull.get('baseRepo.name')) !== -1) {
 					return true;
 				}
 
 				// author filter
-				if(ENV.USER_FILTERS.indexOf(pull.get('userLogin')) !== -1) {
+				if(ENV.DEFAULT_USER_FILTERS.indexOf(pull.get('userLogin')) !== -1) {
 					return true;
 				}
 
 				return false;
 			});
+
+			if(this.get('author') || this.get('state') || this.get('team')) {
+				// apply user-applied filters
+				pulls = pulls.filter((pull) => {
+
+					let isMatch = true;
+
+					if(this.get('state')) {
+						// status filter
+						if(this.get('state') !== pull.get('stateLabel')) {
+							isMatch = false;
+						}
+					}
+
+					if(this.get('author')) {
+						// author filter
+						if(!pull.get('authorLogin') || this.get('author') !== pull.get('authorLogin')) {
+							isMatch = false;
+						}
+					}
+
+					if(this.get('team')) {
+						let users = ENV.USERS_IN_TEAMS[this.get('team')];
+						if(users.indexOf(pull.get('authorLogin')) === -1) {
+							isMatch = false;
+						}
+					}
+
+					return isMatch;
+				});
+			}
 
 			pulls = pulls.sort((a, b) => {
 				if(a.get('state') !== b.get('state')) {
@@ -105,6 +147,18 @@ export default Controller.extend({
 					});
 				});
 			});
+		},
+
+		onStateFilterChange(state) {
+			this.set('state', state);
+		},
+
+		onAuthorFilterChange(author) {
+			this.set('author', author);
+		},
+
+		onTeamFilterChange(team) {
+			this.set('team', team);
 		},
 	}
 });

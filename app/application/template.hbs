@@ -1,4 +1,61 @@
+<nav class="mainnav">
+	<div class="grid-noBottom">
+		<div class="col-4">
+			<h5 class="mb0">Github Dashboard</h5>
+		</div>
+		<div class="col">
+		</div>
+		<div class="col-2">
+			<div class="filter">
+				{{#power-select
+					allowClear=true
+					placeholder="State"
+					options=stateOptions
+					selected=state
+					onchange=(action 'onStateFilterChange')
+					verticalPosition='below'
+					as |state|
+				}}
+					{{state}}
+				{{/power-select}}
+			</div>
+		</div>
+		<div class="col-2">
+			<div class="filter">
+				{{#power-select
+					allowClear=true
+					placeholder="Team"
+					options=teamOptions
+					selected=team
+					onchange=(action 'onTeamFilterChange')
+					verticalPosition='below'
+					as |team|
+				}}
+				{{team}}
+			{{/power-select}}
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="filter">
+				{{#power-select
+					allowClear=true
+					placeholder="Author"
+					options=authorOptions
+					selected=author
+					onchange=(action 'onAuthorFilterChange')
+					verticalPosition='below'
+					as |author|
+				}}
+				{{author}}
+			{{/power-select}}
+			</div>
+		</div>
+	</div>
+</nav>
 <section class="pulls">
+	<div class="totals">
+		Viewing <strong>{{filteredPulls.length}}</strong> PRs
+	</div>
 	<div class="grid">
 		{{#each filteredPulls as |pull|}}
 			<div class="col-12">

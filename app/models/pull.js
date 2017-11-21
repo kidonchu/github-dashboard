@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed } = Ember;
-const { bool } = computed;
+const { alias, bool } = computed;
 
 /**
  * Recursively finds last review state
@@ -48,6 +48,8 @@ export default DS.Model.extend({
 	reviews: DS.hasMany('review', {async: true}),
 	comments: DS.hasMany('comment', {async: true}),
 	baseRepo: DS.belongsTo('repository', {async: true}),
+
+	authorLogin: alias('author.login'),
 
 	description: computed('body', function() {
 		let description = this.get('body').replace(/[\s]?[#]+ Description[\s]*/i, '');
@@ -104,6 +106,18 @@ export default DS.Model.extend({
 			return 'in_progress';
 		} else {
 			return 'waiting';
+		}
+	}),
+
+	stateLabel: computed('isOpen', 'isApproved', 'isChangesRequested', 'isInProgress', function() {
+		if(this.get('isApproved')) {
+			return 'Approved';
+		} else if(this.get('isChangesRequested')) {
+			return 'Changes Requested';
+		} else if(this.get('isInProgress')) {
+			return 'In Progress';
+		} else {
+			return 'Waiting';
 		}
 	}),
 });

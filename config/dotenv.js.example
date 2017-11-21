@@ -4,10 +4,19 @@ module.exports = {
 	WHITELISTED_REPOS: [
 		'gitcli', 'github-dashboard', 'jira-comeon'
 	],
-	REPO_FILTERS: [
+	DEFAULT_REPO_FILTERS: [
 		'gitcli', 'github-dashboard'
 	],
-	USER_FILTERS: [
+	DEFAULT_USER_FILTERS: [
 		'kidonchu', 'kvann'
-	]
+	],
+	TEAM_FILTERS: [
+		'Dev'
+	],
+	USER_FILTERS: [
+		'kidonchu'
+	],
+	USERS_IN_TEAMS: {
+		Dev: ['kidonchu'],
+	}
 };

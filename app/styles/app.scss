@@ -1,13 +1,38 @@
 @import './global';
 @import 'node_modules/gridlex/src/gridlex';
 @import './components/pull-card';
+@import 'ember-power-select';
 
 a {
 	text-decoration: none;
 }
 
+.mainnav {
+	background-color: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 10px;
+	width: 100%;
+	z-index: 1;
+	border-bottom: 1px solid rgba(0,0,0,.0975);
+}
+
+.filter {
+}
+
 .pulls {
-	padding-top: 30px;
+	padding-top: 70px;
 	margin: 0 auto;
 	max-width: 800px;
+
+	.totals {
+		font-size: .7em;
+		color: #999;
+		text-transform: uppercase;
+	}
+}
+
+.ember-power-select-trigger {
+	cursor: pointer;
 }
