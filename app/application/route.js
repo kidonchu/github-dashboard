@@ -2,7 +2,7 @@ import Ember from 'ember';
 import ENV from 'github-dashboard/config/environment';
 
 const { Route } = Ember;
-const { hash, Promise } = Ember.RSVP;
+const { allSettled, hash, Promise } = Ember.RSVP;
 
 export default Route.extend({
 
@@ -32,12 +32,17 @@ export default Route.extend({
 			return true;
 		});
 
+		let promises = [];
 		repos.forEach(function(repo) {
-			repo.get('pulls').then((p) => {
-				let pulls = controller.get('pulls');
-				pulls = pulls.concat(p.toArray());
-				controller.set('pulls', pulls);
+			promises.push(repo.get('pulls'));
+		});
+
+		allSettled(promises).then((hash) => {
+			let pulls = [];
+			hash.forEach((promise) => {
+				pulls = pulls.concat(promise.value.toArray());
 			});
+			controller.set('pulls', pulls);
 		});
 	}
 });
