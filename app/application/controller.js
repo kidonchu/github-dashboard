@@ -11,6 +11,8 @@ const { service } = Ember.inject;
  */
 export default Controller.extend({
 
+	queryParams: ['state', 'author', 'team'],
+
 	store: service(),
 
 	pulls: [],
