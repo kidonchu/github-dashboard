@@ -25,6 +25,9 @@ export default Route.extend({
 	 * @param {Promise} model
 	 */
 	setupController(controller, model) {
+
+		controller.set('loading', true);
+
 		let repos = model.repos.filter(function(repo) {
 			if(ENV.WHITELISTED_REPOS.indexOf(repo.get('name')) === -1) {
 				return false;
@@ -43,6 +46,7 @@ export default Route.extend({
 				pulls = pulls.concat(promise.value.toArray());
 			});
 			controller.set('pulls', pulls);
+			controller.set('loading', false);
 		});
 	}
 });

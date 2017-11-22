@@ -19,6 +19,8 @@ export default Controller.extend({
 	author: '',
 	team: '',
 
+	loading: true,
+
 	stateOptions: ['Approved', 'Changes Requested', 'In Progress', 'Waiting'],
 	teamOptions: ENV.TEAM_FILTERS,
 	authorOptions: ENV.USER_FILTERS,

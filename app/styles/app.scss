@@ -18,7 +18,9 @@ a {
 	border-bottom: 1px solid rgba(0,0,0,.0975);
 }
 
-.filter {
+.loader {
+	background: #fafafa url(../images/loader.svg) no-repeat center center;
+	height: 70px;
 }
 
 .pulls {

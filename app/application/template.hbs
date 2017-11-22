@@ -53,17 +53,21 @@
 	</div>
 </nav>
 <section class="pulls">
-	<div class="totals">
-		Viewing <strong>{{filteredPulls.length}}</strong> PRs
-	</div>
-	<div class="grid">
-		{{#each filteredPulls as |pull|}}
-			<div class="col-12">
-				{{pull-card
-					pull=pull
-					addComment=(action 'addComment')
-				}}
-			</div>
-		{{/each}}
-	</div>
+	{{#if loading}}
+		<div class="loader mt100"></div>
+	{{else}}
+		<div class="totals">
+			Viewing <strong>{{filteredPulls.length}}</strong> PRs
+		</div>
+		<div class="grid">
+				{{#each filteredPulls as |pull|}}
+					<div class="col-12">
+						{{pull-card
+							pull=pull
+							addComment=(action 'addComment')
+						}}
+					</div>
+				{{/each}}
+		</div>
+	{{/if}}
 </section>
