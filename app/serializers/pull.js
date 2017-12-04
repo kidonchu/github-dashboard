@@ -29,6 +29,12 @@ export default DS.JSONAPISerializer.extend({
 				state: payload.state,
 			},
 			relationships: {
+				repo: {
+					data: {
+						type: 'repository',
+						id: payload.base.repo.full_name,
+					}
+				},
 				author: {
 					data: {
 						type: 'user',
