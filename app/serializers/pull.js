@@ -1,35 +1,54 @@
-import GithubSerializer from 'ember-data-github/serializers/github';
+import DS from 'ember-data';
 
-export default GithubSerializer.extend({
-	normalize(modelClass, hash, prop) {
-		let modelHash = {
-			id: hash.id,
-			number: hash.number,
-			title: hash.title,
-			isOpen: (hash.state === 'open'),
-			htmlUrl: hash.html_url,
-			body: hash.body,
-			createdAt: hash.created_at,
-			updatedAt: hash.updated_at,
-			closedAt: hash.closed_at,
-			mergedAt: hash.merged_at,
-			userAvatarUrl: hash.user.avatar_url,
-			userLogin: hash.user.login,
-			links: {
-				author: hash.user.url,
-				baseRepo: hash.base.repo.url,
-				reviews: hash.url + '/reviews',
-				comments: hash.comments_url,
+function trimHost(str) {
+	return str.replace('https://api.github.com', '');
+}
+
+export default DS.JSONAPISerializer.extend({
+
+	normalizeResponse(store, primaryModelClass, payload, id, requestType) {
+
+		let repo = payload.base.repo;
+		let user = payload.user;
+
+		let jsonPayload = {
+			data: {
+				id: `${repo.name}-${payload.number}`,
+				type: 'pull',
+				attributes: {
+					number: payload.number,
+					title: payload.title,
+					body: payload.body,
+					'html-url': payload.html_url,
+					state: payload.state,
+				},
+				relationships: {
+					author: {
+						data: {
+							type: 'user',
+							id: user.login,
+						}
+					},
+					reviews: {
+						links: {
+							related: trimHost(payload.url) + '/reviews',
+						}
+					},
+					'issue-comments': {
+						links: {
+							related: trimHost(payload.comments_url),
+						}
+					},
+					'review-comments': {
+						links: {
+							related: trimHost(payload.review_comments_url),
+						}
+					}
+				}
 			}
 		};
 
-		// by default, PR is assigned to author
-		let assignee = hash.user.url;
-		if(hash.assignee) {
-			assignee = hash.assignee.url;
-		}
-		modelHash.links.assignee = assignee;
+		return this._super(store, primaryModelClass, jsonPayload, id, requestType);
+	},
 
-		return this._super(modelClass, modelHash, prop);
-	}
 });
