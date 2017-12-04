@@ -11,7 +11,8 @@ export default DS.JSONAPISerializer.extend({
 				attributes: {
 					login: payload.login,
 					name: payload.name,
-					'avatar-url': payload.avatar_url
+					'avatar-url': payload.avatar_url,
+					'html-url': payload.html_url,
 				}
 			}
 		};

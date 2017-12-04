@@ -39,14 +39,14 @@ export default Controller.extend({
 	 */
 	filteredPulls: computed(
 		'author', 'state', 'team',
-		'pulls.[]', 'pulls.@each.authorLogin',
+		'pulls.[]', 'pulls.@each.authorLogin', 'pulls.@each.repoName',
 		function() {
 
 			// apply whitelist filters
 			let pulls = this.get('pulls').filter((pull) =>  {
 
 				// repo filter
-				if(ENV.DEFAULT_REPO_FILTERS.indexOf(pull.get('repo.name')) !== -1) {
+				if(ENV.DEFAULT_REPO_FILTERS.indexOf(pull.get('repoName')) !== -1) {
 					return true;
 				}
 

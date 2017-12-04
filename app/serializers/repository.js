@@ -20,6 +20,7 @@ export default DS.JSONAPISerializer.extend({
 			attributes: {
 				'full-name': payload.full_name,
 				name: payload.name,
+				'html-url': payload.html_url,
 			},
 			relationships: {
 				pulls: {
