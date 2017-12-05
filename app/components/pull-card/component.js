@@ -60,7 +60,7 @@ export default Component.extend({
 						return Ember.Object.create({
 							author: comment.get('authorLogin'),
 							authorName: comment.get('authorName'),
-							body: Ember.String.htmlSafe(comment.get('body')),
+							body: Ember.String.htmlSafe(comment.get('fullBody')),
 							createdAt: comment.get('createdAt'),
 						});
 					})

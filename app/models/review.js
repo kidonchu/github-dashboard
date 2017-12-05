@@ -26,26 +26,43 @@ export default DS.Model.extend({
 	fullBody: computed(
 		'state', 'body', 'comments.[]',
 		function() {
+
 			let numComments = this.get('comments.length');
+			let body = this.get('body');
+
+			// if empty body, get body from review comments
+			if(body === '') {
+				body = this.get('comments').reduce((accumulator, comment) => {
+					return accumulator + ' ' + comment.get('body');
+				}, '');
+			}
+
+			let maxLength = 170;
+			if(body.length > maxLength) {
+				body = body.substring(0, maxLength) + '...';
+			}
+
+			let color = '';
+			let action = '';
+
 			switch(this.get('state')) {
 				case 'approved':
-					return Ember.String.htmlSafe(
-						`<span class="green bold">approved (${numComments}).</span> ${this.get('body')}`
-					);
+					color = 'green';
+					action = 'approved';
+					break;
 				case 'changes_requested':
-					return Ember.String.htmlSafe(
-						`<span class="red bold">requested changes (${numComments}).</span> ${this.get('body')}`
-					);
+					color = 'red';
+					action = 'requested changes';
+					break;
 				case 'commented':
-					return Ember.String.htmlSafe(
-						`<span class="orange bold">reviewed (${numComments}).</span> ${this.get('body')}`
-					);
-				default:
-					return Ember.String.htmlSafe(
-						`<span class="bold">unknown state.</span> ${this.get('body')}`
-					);
+					color = 'orange';
+					action = 'reviewed';
+					break;
 			}
-			return '';
+
+			return Ember.String.htmlSafe(
+				`<span class="${color} bold">${action} (${numComments}).</span> ${body}`
+			);
 		}
 	),
 });

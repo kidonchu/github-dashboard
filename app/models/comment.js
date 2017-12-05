@@ -12,4 +12,15 @@ export default DS.Model.extend({
 
 	authorLogin: computed.alias('author.login'),
 	authorName: computed.alias('author.name'),
+
+	fullBody: computed('body', function() {
+
+		let body = this.get('body');
+		let maxLength = 170;
+		if(body.length > maxLength) {
+			body = body.substring(0, maxLength) + '...';
+		}
+		return body;
+
+	}),
 });
