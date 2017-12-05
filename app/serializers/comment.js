@@ -17,6 +17,7 @@ export default DS.JSONAPISerializer.extend({
 			attributes: {
 				body: payload.body,
 				'created-at': payload.created_at,
+				'html-url': payload.html_url,
 			},
 			relationships: {
 				author: {

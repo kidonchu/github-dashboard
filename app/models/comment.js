@@ -7,6 +7,7 @@ export default DS.Model.extend({
 	body: DS.attr('string'),
 	createdAt: DS.attr('date'),
 	author: DS.belongsTo('user', {async: true}),
+	htmlUrl: DS.attr('string'),
 
 	hasBody: computed.notEmpty('body'),
 

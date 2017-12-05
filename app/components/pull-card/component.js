@@ -51,6 +51,7 @@ export default Component.extend({
 						authorName: review.get('authorName'),
 						body: Ember.String.htmlSafe(review.get('fullBody')),
 						createdAt: review.get('submittedAt'),
+						url: review.get('htmlUrl'),
 					});
 				});
 
@@ -62,6 +63,7 @@ export default Component.extend({
 							authorName: comment.get('authorName'),
 							body: Ember.String.htmlSafe(comment.get('fullBody')),
 							createdAt: comment.get('createdAt'),
+							url: comment.get('htmlUrl'),
 						});
 					})
 				);

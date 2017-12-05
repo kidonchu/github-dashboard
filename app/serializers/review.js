@@ -26,6 +26,7 @@ export default DS.JSONAPISerializer.extend({
 				body: payload.body,
 				state: payload.state.toLowerCase(),
 				'submitted-at': payload.submitted_at,
+				'html-url': payload.html_url,
 			},
 			relationships: {
 				author: {

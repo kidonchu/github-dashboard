@@ -7,6 +7,7 @@ export default DS.Model.extend({
 	body: DS.attr('string'),
 	state: DS.attr('string'),
 	submittedAt: DS.attr('date'),
+	htmlUrl: DS.attr('string'),
 
 	author: DS.belongsTo('user', {async:true}),
 	pull: DS.belongsTo('pull', {async:true}),

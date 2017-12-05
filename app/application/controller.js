@@ -23,12 +23,22 @@ export default Controller.extend({
 
 	loading: true,
 
-	stateOptions: ['Approved', 'Changes Requested', 'In Progress', 'Waiting'],
+	stateOptions: ['approved', 'changes_requested', 'waiting'],
 	teamOptions: ENV.TEAM_FILTERS,
 	authorOptions: ENV.USER_FILTERS,
 
-	numPulls: computed('filteredPulls.[]', function() {
-		return this.get('filteredPulls').length;
+	numPulls: computed.alias('filteredPulls.length'),
+
+	numApproved: computed('filteredPulls.[]', function() {
+		return this.get('filteredPulls').filterBy('isApproved').length;
+	}),
+
+	numChangesRequested: computed('filteredPulls.[]', function() {
+		return this.get('filteredPulls').filterBy('isChangesRequested').length;
+	}),
+
+	numWaiting: computed('numApproved', 'numChangesRequested', function() {
+		return this.get('numPulls') - this.get('numApproved') - this.get('numChangesRequested');
 	}),
 
 	/**
@@ -66,7 +76,7 @@ export default Controller.extend({
 
 					if(this.get('state')) {
 						// status filter
-						if(this.get('state') !== pull.get('stateLabel')) {
+						if(this.get('state') !== pull.get('state')) {
 							isMatch = false;
 						}
 					}

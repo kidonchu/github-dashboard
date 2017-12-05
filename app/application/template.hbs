@@ -57,7 +57,10 @@
 		<div class="loader mt100"></div>
 	{{else}}
 		<div class="totals">
-			Viewing <strong>{{filteredPulls.length}}</strong> PRs
+			Viewing <strong>{{filteredPulls.length}}</strong> PRs -
+			<span class="green"><strong>{{numApproved}}</strong></span>
+			<span class="red"><strong>{{numChangesRequested}}</strong></span>
+			<span class="grey"><strong>{{numWaiting}}</strong></span>
 		</div>
 		<div class="grid">
 				{{#each filteredPulls as |pull|}}
