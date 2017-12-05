@@ -18,6 +18,7 @@ export default DS.Model.extend({
 	issueComments: DS.hasMany('comment', {async: true}),
 	reviewComments: DS.hasMany('comment', {async: true}),
 
+	repoName: computed.alias('repo.name'),
 	authorLogin: computed.alias('author.login'),
 
 	description: computed('body', function() {

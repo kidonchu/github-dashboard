@@ -1,16 +1,33 @@
-import GithubSerializer from 'ember-data-github/serializers/github';
+import DS from 'ember-data';
 
-export default GithubSerializer.extend({
-	normalize(modelClass, hash, prop) {
-		let newHash = {
-			id: hash.id,
-			body: hash.body,
-			createdAt: hash.created_at,
-			links: {
-				author: hash.user.url
+export default DS.JSONAPISerializer.extend({
+
+	normalizeFindHasManyResponse(store, primaryModelClass, payload, id, requestType){
+		let jsonPayload = {
+			data: payload.map(this.doNormalize)
+		};
+		return this._super(store, primaryModelClass, jsonPayload, id, requestType);
+	},
+
+	doNormalize(payload) {
+
+		let jsonPayload = {
+			id: payload.id,
+			type: 'comment',
+			attributes: {
+				body: payload.body,
+				'created-at': payload.created_at,
+			},
+			relationships: {
+				author: {
+					data: {
+						type: 'user',
+						id: payload.user.login,
+					}
+				},
 			}
 		};
 
-		return this._super(modelClass, newHash, prop);
-	}
+		return jsonPayload;
+	},
 });

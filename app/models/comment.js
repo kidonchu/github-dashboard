@@ -8,5 +8,8 @@ export default DS.Model.extend({
 	createdAt: DS.attr('date'),
 	author: DS.belongsTo('user', {async: true}),
 
-	hasBody: computed.notEmpty('body')
+	hasBody: computed.notEmpty('body'),
+
+	authorLogin: computed.alias('author.login'),
+	authorName: computed.alias('author.name'),
 });
