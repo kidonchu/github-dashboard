@@ -16,7 +16,7 @@ export default DS.JSONAPISerializer.extend({
 			type: 'review',
 			attributes: {
 				body: payload.body,
-				state: payload.state,
+				state: payload.state.toLowerCase(),
 				'submitted-at': payload.submitted_at,
 			},
 			relationships: {
