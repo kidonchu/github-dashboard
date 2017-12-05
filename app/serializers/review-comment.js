@@ -1,9 +1,5 @@
 import DS from 'ember-data';
 
-function trimHost(str) {
-	return str.replace('https://api.github.com', '');
-}
-
 export default DS.JSONAPISerializer.extend({
 
 	normalizeFindHasManyResponse(store, primaryModelClass, payload, id, requestType){
@@ -15,17 +11,12 @@ export default DS.JSONAPISerializer.extend({
 
 	doNormalize(payload) {
 
-		let parts = trimHost(payload.pull_request_url).split('/');
-		let repo = parts[3];
-		let number = parts[5];
-
 		let jsonPayload = {
 			id: payload.id,
-			type: 'review',
+			type: 'review-comment',
 			attributes: {
 				body: payload.body,
-				state: payload.state.toLowerCase(),
-				'submitted-at': payload.submitted_at,
+				'created-at': payload.created_at,
 			},
 			relationships: {
 				author: {
@@ -34,15 +25,15 @@ export default DS.JSONAPISerializer.extend({
 						id: payload.user.login,
 					}
 				},
-				pull: {
+				review: {
 					data: {
-						type: 'pull',
-						id: `${repo}-${number}`,
+						type: 'review',
+						id: payload.pull_request_review_id,
 					}
 				},
 			}
 		};
 
 		return jsonPayload;
-	}
+	},
 });

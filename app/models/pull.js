@@ -16,7 +16,7 @@ export default DS.Model.extend({
 	author: DS.belongsTo('user', {async: true}),
 	reviews: DS.hasMany('review', {async: true}),
 	issueComments: DS.hasMany('comment', {async: true}),
-	reviewComments: DS.hasMany('comment', {async: true}),
+	reviewComments: DS.hasMany('review-comment', {async: true}),
 
 	repoName: computed.alias('repo.name'),
 	authorLogin: computed.alias('author.login'),

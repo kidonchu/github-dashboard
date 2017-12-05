@@ -31,6 +31,8 @@ export default Component.extend({
 		'pull.issueComments.@each.authorName',
 		function() {
 
+			// make sure review's comments are loaded with other models
+			// so that we can display number of review comments per review
 			let promise = new Ember.RSVP.Promise((resolve) => {
 				Ember.RSVP.hash({
 					reviews: this.get('pull.reviews'),
@@ -42,7 +44,6 @@ export default Component.extend({
 			}).then((promises) => {
 				let reviews = promises.reviews.toArray();
 				let issueComments = promises.issueComments.toArray();
-				let reviewComments = promises.reviewComments.toArray();
 
 				let comments = reviews.map((review) => {
 					return Ember.Object.create({
