@@ -112,8 +112,6 @@ export default Component.extend({
 				return 'green';
 			case 'changes_requested':
 				return 'red';
-			case 'in_progress':
-				return 'yellow';
 			default:
 				return 'grey';
 		}

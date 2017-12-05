@@ -3,12 +3,34 @@ import DS from 'ember-data';
 
 const { computed } = Ember;
 
+/**
+ * Recursively finds last review state
+ *
+ * @method getLastReviewState
+ * @param {Model.Review[]} reviews
+ * @param {Number} index
+ * @return {String|null}
+ */
+function getLastReviewState(reviews, index) {
+
+	if(reviews.length < 0 || index < 0) {
+		return null;
+	}
+
+	let state = reviews[index].get('state').toLowerCase();
+	switch(state) {
+		case 'approved':
+		case 'changes_requested':
+			return state;
+	}
+	return getLastReviewState(reviews, --index);
+}
+
 export default DS.Model.extend({
 	number: DS.attr('number'),
 	title: DS.attr('string'),
 	htmlUrl: DS.attr('string'),
 	body: DS.attr('string'),
-	state: DS.attr('string'),
 	createdAt: DS.attr('date'),
 	updatedAt: DS.attr('date'),
 
@@ -26,4 +48,30 @@ export default DS.Model.extend({
 		description = description.replace(/[\s]?[#]+ Acceptance criteria[\s\S]*$/i, '');
 		return description;
 	}),
+
+	lastReviewState: computed('reviews.@each.id', function() {
+		let reviews = this.get('reviews').toArray();
+		return getLastReviewState(reviews, reviews.length - 1);
+	}),
+
+	isApproved: computed('lastReviewState', function() {
+		return this.get('lastReviewState') === 'approved';
+	}),
+
+	isChangesRequested: computed('lastReviewState', function() {
+		return this.get('lastReviewState') === 'changes_requested';
+	}),
+
+	state: computed(
+		'isApproved', 'isChangesRequested',
+		function() {
+			if(this.get('isApproved')) {
+				return 'approved';
+			} else if(this.get('isChangesRequested')) {
+				return 'changes_requested';
+			} else {
+				return 'waiting';
+			}
+		}
+	),
 });

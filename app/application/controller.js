@@ -38,7 +38,7 @@ export default Controller.extend({
 	 * @type {Model.Pull[]}
 	 */
 	filteredPulls: computed(
-		'author', 'state', 'team',
+		'author', 'state', 'team', 'pulls.@each.state',
 		'pulls.[]', 'pulls.@each.authorLogin', 'pulls.@each.repoName',
 		function() {
 

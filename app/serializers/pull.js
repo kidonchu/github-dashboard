@@ -26,7 +26,6 @@ export default DS.JSONAPISerializer.extend({
 				title: payload.title,
 				body: payload.body,
 				'html-url': payload.html_url,
-				state: payload.state,
 				'created-at': payload.created_at,
 				'updated-at': payload.updated_at,
 			},
