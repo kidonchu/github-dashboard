@@ -1,4 +1,5 @@
 import GithubPullAdapter from 'ember-data-github/adapters/github-pull';
+import ENV from 'github-dashboard/config/environment';
 
 export default GithubPullAdapter.extend({
 
@@ -8,7 +9,7 @@ export default GithubPullAdapter.extend({
 		let repo = parts[0];
 		let number = parts[1];
 
-		return `${this.get('host')}/repos/ActiveCampaign/${repo}/pulls/${number}`;
+		return `${this.get('host')}/repos/${ENV.ORGANIZATION}/${repo}/pulls/${number}`;
 	},
 
 	urlForQueryRecord(query) {
