@@ -38,20 +38,20 @@ export default Controller.extend({
 	 * @type {Model.Pull[]}
 	 */
 	filteredPulls: computed(
-		'author', 'state', 'team',
-		'pulls.@each.{title,state,authorLogin}',
+		'author', 'state', 'team', 'pulls.@each.state',
+		'pulls.[]', 'pulls.@each.authorLogin', 'pulls.@each.repoName',
 		function() {
 
 			// apply whitelist filters
 			let pulls = this.get('pulls').filter((pull) =>  {
 
 				// repo filter
-				if(ENV.DEFAULT_REPO_FILTERS.indexOf(pull.get('baseRepo.name')) !== -1) {
+				if(ENV.DEFAULT_REPO_FILTERS.indexOf(pull.get('repoName')) !== -1) {
 					return true;
 				}
 
 				// author filter
-				if(ENV.DEFAULT_USER_FILTERS.indexOf(pull.get('userLogin')) !== -1) {
+				if(ENV.DEFAULT_USER_FILTERS.indexOf(pull.get('authorLogin')) !== -1) {
 					return true;
 				}
 

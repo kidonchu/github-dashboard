@@ -2,17 +2,16 @@ import Ember from 'ember';
 import ENV from 'github-dashboard/config/environment';
 
 const { Route } = Ember;
-const { allSettled, hash, Promise } = Ember.RSVP;
+const { allSettled, Promise } = Ember.RSVP;
 
 export default Route.extend({
 
 	model() {
 		return new Promise((resolve, reject) => {
 			this.store.findRecord('organization', ENV.ORGANIZATION).then(org => {
-				hash({
-					organization: org,
-					repos: org.get('repositories'),
-				}).then(hash => resolve(hash));
+				org.get('repos').then((repos) => {
+					resolve(repos);
+				});
 			}).catch(err => reject(err));
 		});
 	},
@@ -28,13 +27,14 @@ export default Route.extend({
 
 		controller.set('loading', true);
 
-		let repos = model.repos.filter(function(repo) {
+		let repos = model.filter(function(repo) {
 			if(ENV.WHITELISTED_REPOS.indexOf(repo.get('name')) === -1) {
 				return false;
 			}
 			return true;
 		});
 
+		// make sure all repos' pulls are fetched before doing anything
 		let promises = [];
 		repos.forEach(function(repo) {
 			promises.push(repo.get('pulls'));

@@ -7,20 +7,8 @@ export default DS.Model.extend({
 	body: DS.attr('string'),
 	createdAt: DS.attr('date'),
 	author: DS.belongsTo('user', {async: true}),
-
-	hasBody: computed.notEmpty('body'),
+	review: DS.belongsTo('review', {async: true}),
 
 	authorLogin: computed.alias('author.login'),
 	authorName: computed.alias('author.name'),
-
-	fullBody: computed('body', function() {
-
-		let body = this.get('body');
-		let maxLength = 170;
-		if(body.length > maxLength) {
-			body = body.substring(0, maxLength) + '...';
-		}
-		return body;
-
-	}),
 });

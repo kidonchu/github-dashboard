@@ -2,7 +2,6 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 const { computed } = Ember;
-const { alias, bool } = computed;
 
 /**
  * Recursively finds last review state
@@ -30,26 +29,19 @@ function getLastReviewState(reviews, index) {
 export default DS.Model.extend({
 	number: DS.attr('number'),
 	title: DS.attr('string'),
-	isOpen: DS.attr('boolean'),
 	htmlUrl: DS.attr('string'),
 	body: DS.attr('string'),
 	createdAt: DS.attr('date'),
 	updatedAt: DS.attr('date'),
-	closedAt: DS.attr('date'),
-	mergedAt: DS.attr('date'),
-	userLogin: DS.attr('string'),
-	userAvatarUrl: DS.attr('string'),
 
-	assignee: DS.belongsTo('user', { async: true }),
-	author: DS.belongsTo('user', {
-		async: true,
-		inverse: null
-	}),
+	repo: DS.belongsTo('repository', {async: true}),
+	author: DS.belongsTo('user', {async: true}),
 	reviews: DS.hasMany('review', {async: true}),
-	comments: DS.hasMany('comment', {async: true}),
-	baseRepo: DS.belongsTo('repository', {async: true}),
+	issueComments: DS.hasMany('comment', {async: true}),
+	reviewComments: DS.hasMany('review-comment', {async: true}),
 
-	authorLogin: alias('author.login'),
+	repoName: computed.alias('repo.name'),
+	authorLogin: computed.alias('author.login'),
 
 	description: computed('body', function() {
 		let description = this.get('body').replace(/[\s]?[#]+ Description[\s]*/i, '');
@@ -57,12 +49,7 @@ export default DS.Model.extend({
 		return description;
 	}),
 
-	lastReviewState: computed('reviews.isFulfilled', 'reviews.content.isLoaded', function() {
-		if(!this.get('reviews.isFulfilled') || !this.get('reviews.content.isLoaded')) {
-			this.get('reviews');
-			return null;
-		}
-
+	lastReviewState: computed('reviews.@each.id', function() {
 		let reviews = this.get('reviews').toArray();
 		return getLastReviewState(reviews, reviews.length - 1);
 	}),
@@ -75,49 +62,16 @@ export default DS.Model.extend({
 		return this.get('lastReviewState') === 'changes_requested';
 	}),
 
-	isInProgress: computed('assignee.login', 'author.login', function() {
-		return this.get('assignee.login') !== this.get('author.login');
-	}),
-
-	/**
-	 * Whether the PR was merged
-	 *
-	 * @property isMerged
-	 * @type {Boolean}
-	 */
-	isMerged: bool('mergedAt'),
-
-	/**
-	 * Whether the PR was closed without merging
-	 *
-	 * @property isClosed
-	 * @type {Boolean}
-	 */
-	isClosed: computed('isMerged', 'closedAt', function() {
-		return this.get('closedAt') && !this.get('isMerged');
-	}),
-
-	state: computed('isOpen', 'isApproved', 'isChangesRequested', 'isInProgress', function() {
-		if(this.get('isApproved')) {
-			return 'approved';
-		} else if(this.get('isChangesRequested')) {
-			return 'changes_requested';
-		} else if(this.get('isInProgress')) {
-			return 'in_progress';
-		} else {
-			return 'waiting';
+	state: computed(
+		'isApproved', 'isChangesRequested',
+		function() {
+			if(this.get('isApproved')) {
+				return 'approved';
+			} else if(this.get('isChangesRequested')) {
+				return 'changes_requested';
+			} else {
+				return 'waiting';
+			}
 		}
-	}),
-
-	stateLabel: computed('isOpen', 'isApproved', 'isChangesRequested', 'isInProgress', function() {
-		if(this.get('isApproved')) {
-			return 'Approved';
-		} else if(this.get('isChangesRequested')) {
-			return 'Changes Requested';
-		} else if(this.get('isInProgress')) {
-			return 'In Progress';
-		} else {
-			return 'Waiting';
-		}
-	}),
+	),
 });

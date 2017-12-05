@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 
-const { Component, computed, observer } = Ember;
+const { Component, computed } = Ember;
 const { service } = Ember.inject;
 
 export default Component.extend({
@@ -8,8 +9,6 @@ export default Component.extend({
 	store: service(),
 	tagName: 'article',
 	classNames: ['components_pull-card'],
-
-	allComments: [],
 
 	commentValue: '',
 
@@ -20,50 +19,69 @@ export default Component.extend({
 	 */
 	isShowingAllComments: false,
 
-	getPullComments: observer(
-		'pull.reviews.content.isLoaded', 'pull.reviews.@each.author',
-		'pull.comments.content.isLoaded', 'pull.comments.@each.author',
+	comments: computed(
+		'pull.reviews.@each.id',
+		'pull.reviews.@each.authorLogin',
+		'pull.reviews.@each.authorName',
+		'pull.reviewComments.@each.id',
+		'pull.reviewComments.@each.authorLogin',
+		'pull.reviewComments.@each.authorName',
+		'pull.issueComments.@each.id',
+		'pull.issueComments.@each.authorLogin',
+		'pull.issueComments.@each.authorName',
 		function() {
-			this.set('comments', []);
 
-			let comments = [];
+			// make sure review's comments are loaded with other models
+			// so that we can display number of review comments per review
+			let promise = new Ember.RSVP.Promise((resolve) => {
+				Ember.RSVP.hash({
+					reviews: this.get('pull.reviews'),
+					issueComments: this.get('pull.issueComments'),
+					reviewComments: this.get('pull.reviewComments'),
+				}).then((promises) => {
+					resolve(promises);
+				});
+			}).then((promises) => {
+				let reviews = promises.reviews.toArray();
+				let issueComments = promises.issueComments.toArray();
 
-			this.get('pull.reviews').map((review) => {
-				if(review.get('state') === 'changes_requested' ||
-					review.get('state') === 'approved' ||
-					review.get('hasBody')
-				) {
-					comments.push(Ember.Object.create({
-						author: review.get('author.login'),
-						authorName: review.get('author.name'),
+				let comments = reviews.map((review) => {
+					return Ember.Object.create({
+						author: review.get('authorLogin'),
+						authorName: review.get('authorName'),
 						body: Ember.String.htmlSafe(review.get('fullBody')),
 						createdAt: review.get('submittedAt'),
-					}));
-				}
+					});
+				});
+
+				comments = comments.concat(issueComments
+					.filterBy('hasBody')
+					.map((comment) => {
+						return Ember.Object.create({
+							author: comment.get('authorLogin'),
+							authorName: comment.get('authorName'),
+							body: Ember.String.htmlSafe(comment.get('fullBody')),
+							createdAt: comment.get('createdAt'),
+						});
+					})
+				);
+
+				comments = comments.sortBy('createdAt');
+
+				return comments;
 			});
 
-			this.get('pull.comments').map((comment) => {
-				if(comment.get('hasBody')) {
-					comments.push(Ember.Object.create({
-						author: comment.get('author.login'),
-						authorName: comment.get('author.name'),
-						body: Ember.String.htmlSafe(comment.get('body')),
-						createdAt: comment.get('createdAt'),
-					}));
-				}
+			return DS.PromiseArray.create({
+				promise: promise,
 			});
-
-			comments = comments.sortBy('createdAt');
-
-			this.set('comments', comments);
 		}
 	),
 
 	numComments: computed.alias('comments.length'),
 	hasMultipleComments: computed.gt('numComments', 2),
 
-	pullFirstComment: computed('pull.number', 'pull.baseRepo', function() {
-		let repo = this.get('pull.baseRepo');
+	pullFirstComment: computed('pull.number', 'pull.repo.name', function() {
+		let repo = this.get('pull.repo');
 		let pull = this.get('pull');
 		let comment = 'created the PR ';
 		comment += `<a href="${repo.get('htmlUrl')}" target="_blank">#${repo.get('name')}</a> `;
@@ -83,13 +101,8 @@ export default Component.extend({
 	 * @type {Model.Review[]}
 	 */
 	lastComments: computed('comments.[]', function() {
-		let comments = this.get('comments');
-		if(!comments) {
-			return [];
-		}
-
+		let comments = this.get('comments').toArray();
 		let begin = Math.max(0, comments.length - 2);
-
 		return comments.slice(begin);
 	}),
 
@@ -99,8 +112,6 @@ export default Component.extend({
 				return 'green';
 			case 'changes_requested':
 				return 'red';
-			case 'in_progress':
-				return 'yellow';
 			default:
 				return 'grey';
 		}
