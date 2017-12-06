@@ -143,7 +143,7 @@ export default Controller.extend({
 					return (a.get('state') < b.get('state')) ? -1 : 1;
 				}
 				if(a.get('updatedAt') !== b.get('updatedAt')) {
-					return (a.get('updatedAt') < b.get('updatedAt')) ? 1 : -1;
+					return (a.get('updatedAt') > b.get('updatedAt')) ? 1 : -1;
 				}
 				return 0;
 			});

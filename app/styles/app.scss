@@ -51,24 +51,23 @@ a {
 
 #back-to-top {
 	position: fixed;
-	bottom: 20px;
+	bottom: 0;
 	z-index: 9999;
-	width: 40px;
+	width: 800px;
 	height: 40px;
 	text-align: center;
 	cursor: pointer;
-	background: $orange;
+	background: $grey-light-60;
 	text-decoration: none;
-	transition: opacity 0.2s ease-out;
+	transition: opacity 0.2s ease-in-out;
 	opacity: 0;
-	margin-left: 730px;
 
 	&:hover {
-		background: darken($orange, 5%);
+		background: darken($grey-light-60, 5%);
 	}
 
 	.icon {
-		fill: darken($orange, 25%);
+		fill: darken($grey-light-60, 25%);
 		height: 100%;
 	}
 }
