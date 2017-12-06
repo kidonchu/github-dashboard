@@ -9,6 +9,8 @@ export default DS.Model.extend({
 	author: DS.belongsTo('user', {async: true}),
 	htmlUrl: DS.attr('string'),
 
+	pull: DS.belongsTo('pull', {async: true}),
+
 	hasBody: computed.notEmpty('body'),
 
 	authorLogin: computed.alias('author.login'),

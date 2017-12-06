@@ -8,7 +8,7 @@ import comments from '../mirage/apidata/get_comments';
 import createComment from '../mirage/apidata/create_comment';
 
 export default function() {
-	this.logging = false;
+	this.logging = true;
 	this.urlPrefix = 'https://api.github.com';
 
 	this.get('/users/:username', (db, request) => {
@@ -37,7 +37,7 @@ export default function() {
 	this.get(`/repos/${ENV.ORGANIZATION}/:repo/pulls/:pullId/reviews`, (db, request) => {
 		let repo = request.params.repo;
 		let pullId = request.params.pullId;
-		let re = new RegExp(repo + "\/pulls\/" + pullId);
+		let re = new RegExp(repo + "/pulls/" + pullId);
 		return reviews.filter(function(r) {
 			return re.test(r.pull_request_url);
 		});
@@ -46,7 +46,16 @@ export default function() {
 	this.get(`/repos/${ENV.ORGANIZATION}/:repo/issues/:issueId/comments`, (db, request) => {
 		let repo = request.params.repo;
 		let issueId = request.params.issueId;
-		let re = new RegExp(repo + "\/issues\/" + issueId);
+		let re = new RegExp(repo + "/issues/" + issueId);
+		return comments.filter(function(r) {
+			return re.test(r.issue_url);
+		});
+	});
+
+	this.get(`/repos/${ENV.ORGANIZATION}/:repo/pulls/:issueId/comments`, (db, request) => {
+		let repo = request.params.repo;
+		let issueId = request.params.issueId;
+		let re = new RegExp(repo + "/issues/" + issueId);
 		return comments.filter(function(r) {
 			return re.test(r.issue_url);
 		});

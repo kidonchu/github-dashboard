@@ -48,5 +48,19 @@ export default Route.extend({
 			controller.set('pulls', pulls);
 			controller.set('loading', false);
 		});
-	}
+	},
+
+	actions: {
+
+		addComment(pull, comment) {
+			let user = this.store.peekRecord('user', 'kidonchu');
+			let newComment = this.store.createRecord('comment', {
+				body: comment,
+				author: user,
+				pull: pull,
+			});
+
+			return newComment.save();
+		},
+	},
 });

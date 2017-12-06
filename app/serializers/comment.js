@@ -1,6 +1,17 @@
 import DS from 'ember-data';
 
+function trimHost(str) {
+	return str.replace('https://api.github.com', '');
+}
+
 export default DS.JSONAPISerializer.extend({
+
+	normalizeCreateRecordResponse(store, primaryModelClass, payload, id, requestType) {
+		let jsonPayload = {
+			data: this.doNormalize(payload)
+		};
+		return this._super(store, primaryModelClass, jsonPayload, id, requestType);
+	},
 
 	normalizeFindHasManyResponse(store, primaryModelClass, payload, id, requestType){
 		let jsonPayload = {
@@ -10,6 +21,10 @@ export default DS.JSONAPISerializer.extend({
 	},
 
 	doNormalize(payload) {
+
+		let parts = trimHost(payload.issue_url).split('/');
+		let repo = parts[3];
+		let number = parts[5];
 
 		let jsonPayload = {
 			id: payload.id,
@@ -24,6 +39,12 @@ export default DS.JSONAPISerializer.extend({
 					data: {
 						type: 'user',
 						id: payload.user.login,
+					}
+				},
+				pull: {
+					data: {
+						type: 'pull',
+						id: `${repo}-${number}`,
 					}
 				},
 			}

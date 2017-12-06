@@ -132,23 +132,15 @@ export default Component.extend({
 				}
 
 				let promise = this.addComment(this.get('pull'), this.get('commentValue'));
-				promise.then((comment) => {
-					if(comment && comment.get('id')) {
-						comment.get('author').then((author) => {
-							this.get('comments').pushObject(Ember.Object.create({
-								author: author.get('login'),
-								authorName: author.get('name'),
-								body: Ember.String.htmlSafe(comment.get('body')),
-								createdAt: comment.get('createdAt'),
-							}));
-						});
-					}
+				promise.then(() => {
 					this.set('commentValue', '');
 				}).catch((error) => {
-					alert(error.statusText);
+					console.error(error);
+					alert('An error occurred while adding a comment. Please check your console for more details.');
 				});
 			} else if(e.keyCode === 50) {
-				console.log('@ pressed');
+				// @TODO auto-completion of github mentions
+				return;
 			}
 		}
 	}
