@@ -44,17 +44,17 @@ export default DS.JSONAPISerializer.extend({
 				},
 				reviews: {
 					links: {
-						related: trimHost(payload.url) + '/reviews',
+						related: trimHost(payload.url) + '/reviews?per_page=100',
 					}
 				},
 				'issue-comments': {
 					links: {
-						related: trimHost(payload.comments_url),
+						related: trimHost(payload.comments_url) + '?per_page=100',
 					}
 				},
 				'review-comments': {
 					links: {
-						related: trimHost(payload.review_comments_url),
+						related: trimHost(payload.review_comments_url) + '?per_page=100',
 					}
 				}
 			}

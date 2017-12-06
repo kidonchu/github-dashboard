@@ -25,7 +25,7 @@ export default DS.JSONAPISerializer.extend({
 			relationships: {
 				pulls: {
 					links: {
-						related: trimHost(payload.url) + '/pulls'
+						related: trimHost(payload.url) + '/pulls?per_page=100'
 					}
 				},
 			}
