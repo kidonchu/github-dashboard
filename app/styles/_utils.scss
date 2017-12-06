@@ -1,17 +1,17 @@
 .red {
-	color: #f44336;
+	color: $red;
 }
 
 .green {
-	color: #4caf50;
+	color: $green;
 }
 
 .orange {
-	color: #ff9800;
+	color: $orange;
 }
 
 .grey {
-	color: #777;
+	color: $grey-dark-20;
 }
 
 .bold {
@@ -43,4 +43,25 @@
 
 .mt100 {
 	margin-top: 100px;
+}
+
+.mr5 {
+	margin-right: 5px;
+}
+
+.pill {
+	padding: 3px 15px;
+	background: $grey-light-40;
+	border-radius: 20px;
+	color: white;
+
+	&.green {
+		background: $green;
+	}
+	&.red {
+		background: $red;
+	}
+	&.grey {
+		background: $grey-dark-20;
+	}
 }

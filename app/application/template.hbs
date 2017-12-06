@@ -57,20 +57,55 @@
 		<div class="loader mt100"></div>
 	{{else}}
 		<div class="totals">
-			Viewing <strong>{{filteredPulls.length}}</strong> PRs -
-			<span class="green"><strong>{{numApproved}}</strong></span>
-			<span class="red"><strong>{{numChangesRequested}}</strong></span>
-			<span class="grey"><strong>{{numWaiting}}</strong></span>
+			<a class="anchor-link" href="#approved-pulls">
+				<span class="green pill"><strong>{{numApproved}}</strong></span>
+			</a>
+			<a class="anchor-link" href="#changes-requested-pulls">
+				<span class="red pill"><strong>{{numChangesRequested}}</strong></span>
+			</a>
+			<a class="anchor-link" href="#waiting-pulls">
+				<span class="grey pill"><strong>{{numWaiting}}</strong></span>
+			</a>
 		</div>
-		<div class="grid">
-				{{#each filteredPulls as |pull|}}
-					<div class="col-12">
-						{{pull-card
-							pull=pull
-							addComment=(action 'addComment')
-						}}
-					</div>
-				{{/each}}
+		<div class="grid-noBottom">
+			<div class="col-12">
+				<a class="anchor" id="approved-pulls"></a>
+			</div>
+			{{#each approvedPulls as |pull|}}
+				<div class="col-12">
+					{{pull-card
+						pull=pull
+						addComment=(action 'addComment')
+					}}
+				</div>
+			{{/each}}
+			<div class="col-12">
+				<a class="anchor" id="changes-requested-pulls"></a>
+			</div>
+			{{#each changesRequestedPulls as |pull|}}
+				<div class="col-12">
+					{{pull-card
+						pull=pull
+						addComment=(action 'addComment')
+					}}
+				</div>
+			{{/each}}
+			<div class="col-12">
+				<a class="anchor" id="waiting-pulls"></a>
+			</div>
+			{{#each waitingPulls as |pull|}}
+				<div class="col-12">
+					{{pull-card
+						pull=pull
+						addComment=(action 'addComment')
+					}}
+				</div>
+			{{/each}}
 		</div>
 	{{/if}}
 </section>
+<a href="#" id="back-to-top" title="Back to top">
+	{{svg-icon
+		iconId='chevron-up'
+	}}
+</a>

@@ -1,66 +1,28 @@
-/**
- * These colors are from Tomorrow Night theme
- */
-$base03: #1d1f21; // 00
-$base02: #282a2e; // 01
-$base01: #373b41; // 02
-$base00: #969896; // 03
-$base0:  #b4b7b4; // 04
-$base1:  #c5c8c6; // 05
-$base2:  #e0e0e0; // 06
-$base3:  #ffffff; // 07
-$red:    #cc6666; // 08
-$orange: #de935f; // 09
-$yellow: #f0c674; // 0A
-$green:  #b5bd68; // 0B
-$cyan:   #8abeb7; // 0C
-$blue:   #81a2be; // 0D
-$purple: #b294bb; // 0E
-$brown:  #a3685a; // 0F
+$base-blue:  #4073B5;
+$blue-0:     lighten($base-blue, 49%); /* #F4F7FB */
+$blue-20:    lighten($base-blue, 44%); /* #E1E9F4 */
+$blue-40:    lighten($base-blue, 12%); /* #6893CA */
+$blue-60:    lighten($base-blue, 8%);  /* #5988C4 */
+$blue-80:    $base-blue;
+$blue-100:   darken($base-blue, 9%);   /* #345D93 */
+$blue-120:   darken($base-blue, 16%);  /* #2B4D79 */
+$blue-140:   darken($base-blue, 24%);  /* #203A5B */
 
-/**
- * Adjust the base colors to a new setting.
- *
- * Useful for switching from dark to light versions of Solarized.
- */
-@mixin rebase($rebase03, $rebase02, $rebase01, $rebase00, $rebase0, $rebase1, $rebase2, $rebase3) {
-	background-color: $rebase03;
-	color: $rebase0;
+$base-grey:       #939393;
+$grey-light-20:   lighten($base-grey, 40%); /* #FAFAFA */
+$grey-light-40:   lighten($base-grey, 37%); /* #F2F2F2 */
+$grey-light-60:   lighten($base-grey, 30%); /* #E0E0E0 */
+$grey-light-80:   lighten($base-grey, 21%); /* #CACACA */
+$grey-light-100:  lighten($base-grey, 14%); /* #B8B8B8 */
+$grey-dark-20:    $base-grey;
+$grey-dark-40:    darken($base-grey, 22%); /* #5D5D5D */
+$grey-dark-60:    darken($base-grey, 27%); /* #4E4E4E */
+$grey-dark-80:    darken($base-grey, 34%); /* #3D3D3D */
+$grey-dark-100:   darken($base-grey, 38%); /* #323232 */
+$grey-dark-120:   darken($base-grey, 42%); /* #292929 */
 
-	h1, h2, h3, h4, h5, h6 {
-		border-color: $rebase0;
-		color: $rebase1;
-	}
-
-	a, a:active, a:visited {
-		color: $blue;
-		cursor: pointer;
-		text-decoration: none;
-	}
-}
-
-@mixin accentize($accent) {
-	a, a:active, a:visited, code.url {
-		color: $accent;
-	}
-
-	h1, h2, h3, h4, h5, h6 {
-		color: $accent;
-	}
-}
-
-/**
- * The dark theme is the default mode, so pair this with the general html definition
- */
-/* .dark { */
-/* 	@include rebase($base03,$base02,$base01,$base00,$base0,$base1,$base2,$base3) */
-/* } */
-
-/* body, */
-/* .light { */
-/* 	@include rebase($base3,$base2,$base1,$base0,$base00,$base01,$base02,$base03) */
-/* } */
-
-body {
-	background-color: #fafafa;
-}
+$green: #4DCBA9;
+$red:    #D85177;
+$orange:    #E89045;
+$caution:   #F8B950;
+$purple:    #BE74CB;

@@ -13,6 +13,9 @@ module.exports = function(defaults) {
 		inlineContent: {
 			'octicons': {
 				content: '<div style="display: none;">' + octicons + '</div>'
+			},
+			'kidon': {
+				content: '<div style="display:none;">Hello World</div>'
 			}
 		},
 		sassOptions: {

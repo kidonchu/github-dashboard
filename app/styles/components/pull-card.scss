@@ -1,9 +1,14 @@
+.totals {
+	margin-bottom: 15px;
+	text-align: center;
+}
+
 .components_pull-card {
-	margin-bottom: 5px;
+	margin-bottom: 30px;
 	position: relative;
 	border-radius: 3px;
 	border: 1px solid #e6e6e6;
-	background-color: #fff;
+	background-color: white;
 	font-size: 14px;
 	line-height: 18px;
 }
@@ -172,15 +177,15 @@
 	height: 100%;
 
 	&.red {
-		background-color: #f44336;
+		background-color: $red;
 	}
 	&.green {
-		background-color: #4caf50;
+		background-color: $green;
 	}
 	&.yellow {
-		background-color: #ffeb3b;
+		background-color: $orange;
 	}
 	&.grey {
-		background-color: #777;
+		background-color: $grey-dark-20;
 	}
 }

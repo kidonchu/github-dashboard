@@ -26,7 +26,7 @@ export default DS.JSONAPISerializer.extend({
 			relationships: {
 				repos: {
 					links: {
-						related: trimHost(payload.repos_url)
+						related: trimHost(payload.repos_url) + '?type=private&per_page=101'
 					}
 				},
 			}

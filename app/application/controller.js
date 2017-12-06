@@ -3,6 +3,7 @@ import ENV from '../config/environment';
 
 const { computed, Controller, run } = Ember;
 const { service } = Ember.inject;
+const { scheduleOnce } = Ember.run;
 
 /**
  * @class Application
@@ -27,18 +28,56 @@ export default Controller.extend({
 	teamOptions: ENV.TEAM_FILTERS,
 	authorOptions: ENV.USER_FILTERS,
 
+	init() {
+		this._super(...arguments);
+
+		scheduleOnce('afterRender', this, function() {
+			Ember.$('body').on('click', '.anchor-link', function(e) {
+				run(() => {
+					let target = Ember.$(this.getAttribute('href'));
+					if( target.length ) {
+						e.preventDefault();
+						Ember.$('html, body').stop().animate({
+							scrollTop: target.offset().top - 80
+						}, 300);
+					}
+				});
+			});
+
+			Ember.$(window).on('scroll', function() {
+				run(() => {
+					let scrollTop = Ember.$(window).scrollTop();
+					if (scrollTop > 150) {
+						Ember.$('#back-to-top').addClass('show');
+					} else {
+						Ember.$('#back-to-top').removeClass('show');
+					}
+				});
+			});
+
+			Ember.$('body').on('click', '#back-to-top', function (e) {
+				run(() => {
+					e.preventDefault();
+					Ember.$('html,body').animate({
+						scrollTop: 0
+					}, 300);
+				});
+			});
+		});
+	},
+
 	numPulls: computed.alias('filteredPulls.length'),
 
-	numApproved: computed('filteredPulls.[]', function() {
-		return this.get('filteredPulls').filterBy('isApproved').length;
+	numApproved: computed('approvedPulls.[]', function() {
+		return this.get('approvedPulls').length;
 	}),
 
-	numChangesRequested: computed('filteredPulls.[]', function() {
-		return this.get('filteredPulls').filterBy('isChangesRequested').length;
+	numChangesRequested: computed('changesRequestedPulls.[]', function() {
+		return this.get('changesRequestedPulls').length;
 	}),
 
-	numWaiting: computed('numApproved', 'numChangesRequested', function() {
-		return this.get('numPulls') - this.get('numApproved') - this.get('numChangesRequested');
+	numWaiting: computed('waitingPulls.[]', function() {
+		return this.get('waitingPulls').length;
 	}),
 
 	/**
@@ -112,6 +151,18 @@ export default Controller.extend({
 			return pulls;
 		}
 	),
+
+	approvedPulls: computed('filteredPulls.[]', function() {
+		return this.get('filteredPulls').filterBy('isApproved');
+	}),
+
+	changesRequestedPulls: computed('filteredPulls.[]', function() {
+		return this.get('filteredPulls').filterBy('isChangesRequested');
+	}),
+
+	waitingPulls: computed('filteredPulls.[]', function() {
+		return this.get('filteredPulls').filterBy('isWaiting');
+	}),
 
 	actions: {
 

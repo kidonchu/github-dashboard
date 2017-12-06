@@ -62,6 +62,10 @@ export default DS.Model.extend({
 		return this.get('lastReviewState') === 'changes_requested';
 	}),
 
+	isWaiting: computed('isApproved', 'isChangesRequested', function() {
+		return !this.get('isApproved') && !this.get('isChangesRequested');
+	}),
+
 	state: computed(
 		'isApproved', 'isChangesRequested',
 		function() {
