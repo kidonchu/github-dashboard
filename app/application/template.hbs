@@ -56,17 +56,6 @@
 	{{#if loading}}
 		<div class="loader mt100"></div>
 	{{else}}
-		<div class="totals">
-			<a class="anchor-link" href="#approved-pulls">
-				<span class="green pill"><strong>{{numApproved}}</strong></span>
-			</a>
-			<a class="anchor-link" href="#changes-requested-pulls">
-				<span class="red pill"><strong>{{numChangesRequested}}</strong></span>
-			</a>
-			<a class="anchor-link" href="#waiting-pulls">
-				<span class="grey pill"><strong>{{numWaiting}}</strong></span>
-			</a>
-		</div>
 		<div class="grid-noBottom">
 			<div class="col-12">
 				<a class="anchor" id="approved-pulls"></a>
@@ -103,9 +92,20 @@
 			{{/each}}
 		</div>
 	{{/if}}
+	<a href="#" id="back-to-top" title="Back to top">
+		{{svg-icon
+			iconId='chevron-up'
+		}}
+	</a>
 </section>
-<a href="#" id="back-to-top" title="Back to top">
-	{{svg-icon
-		iconId='chevron-up'
-	}}
-</a>
+<div class="totals">
+	<a class="anchor-link" href="#approved-pulls">
+		<span class="green pill"><strong>{{numApproved}}</strong></span>
+	</a>
+	<a class="anchor-link" href="#changes-requested-pulls">
+		<span class="red pill"><strong>{{numChangesRequested}}</strong></span>
+	</a>
+	<a class="anchor-link" href="#waiting-pulls">
+		<span class="grey pill"><strong>{{numWaiting}}</strong></span>
+	</a>
+</div>

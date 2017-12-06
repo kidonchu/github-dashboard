@@ -17,6 +17,7 @@ a {
 	width: 100%;
 	z-index: 1;
 	border-bottom: 1px solid rgba(0,0,0,.0975);
+	display: none;
 }
 
 .loader {
@@ -24,16 +25,24 @@ a {
 	height: 70px;
 }
 
+.totals {
+	font-size: .7em;
+	color: #999;
+	text-transform: uppercase;
+	position: fixed;
+	left: 50%;
+	top: 0;
+	padding: 10px 15px;
+	transform: translateX(-50%);
+	border: 0 1px 1px 1px solid $grey-light-100;
+	background-color: $grey-light-40;
+}
+
 .pulls {
-	padding-top: 70px;
+	padding-top: 20px;
 	margin: 0 auto;
 	max-width: 800px;
-
-	.totals {
-		font-size: .7em;
-		color: #999;
-		text-transform: uppercase;
-	}
+	position: relative;
 }
 
 .ember-power-select-trigger {
@@ -42,28 +51,26 @@ a {
 
 #back-to-top {
 	position: fixed;
-	top: 70px;
-	right: 40px;
+	bottom: 20px;
 	z-index: 9999;
 	width: 40px;
 	height: 40px;
 	text-align: center;
-	line-height: 30px;
-	background: $grey-light-40;
-	color: #444;
 	cursor: pointer;
-	border: 0;
-	border-radius: 2px;
+	background: $orange;
 	text-decoration: none;
 	transition: opacity 0.2s ease-out;
 	opacity: 0;
+	margin-left: 730px;
+
+	&:hover {
+		background: darken($orange, 5%);
+	}
 
 	.icon {
+		fill: darken($orange, 25%);
 		height: 100%;
 	}
-}
-#back-to-top:hover {
-	background: $grey-light-60;
 }
 #back-to-top.show {
 	opacity: 1;
