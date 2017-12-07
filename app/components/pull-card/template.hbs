@@ -68,7 +68,11 @@
 		</ul>
 	</div>
 	<div class="updatedAt">
-		{{moment-from-now pull.updatedAt}}
+		{{#if lastComment}}
+			{{moment-from-now lastComment.createdAt}}
+		{{else}}
+			{{moment-from-now pull.updatedAt}}
+		{{/if}}
 	</div>
 	<section class="components_pull-card__add-comment">
 		{{textarea

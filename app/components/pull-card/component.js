@@ -108,6 +108,14 @@ export default Component.extend({
 		return comments.slice(begin);
 	}),
 
+	lastComment: computed('lastComments.[]', function() {
+		let lastComments = this.get('lastComments');
+		if(lastComments.length > 0) {
+			return lastComments[lastComments.length - 1];
+		}
+		return null;
+	}),
+
 	statusClass: computed('pull.state', function() {
 		switch(this.get('pull.state')) {
 			case 'approved':
