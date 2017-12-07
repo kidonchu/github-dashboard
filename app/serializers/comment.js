@@ -52,4 +52,14 @@ export default DS.JSONAPISerializer.extend({
 
 		return jsonPayload;
 	},
+
+	serialize() {
+
+		let origJson = this._super(...arguments);
+		let newJson = {
+			body: origJson.data.attributes.body
+		};
+
+		return newJson;
+	},
 });
