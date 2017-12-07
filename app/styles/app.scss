@@ -49,31 +49,3 @@ a {
 .ember-power-select-trigger {
 	cursor: pointer;
 }
-
-#back-to-top {
-	position: fixed;
-	bottom: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 9999;
-	width: 150px;
-	height: 40px;
-	text-align: center;
-	cursor: pointer;
-	background: $grey-light-60;
-	text-decoration: none;
-	transition: opacity 0.2s ease-in-out;
-	opacity: 0;
-
-	&:hover {
-		background: darken($grey-light-60, 5%);
-	}
-
-	.icon {
-		fill: darken($grey-light-60, 25%);
-		height: 100%;
-	}
-}
-#back-to-top.show {
-	opacity: 1;
-}

@@ -43,26 +43,6 @@ export default Controller.extend({
 					}
 				});
 			});
-
-			Ember.$(window).on('scroll', function() {
-				run(() => {
-					let scrollTop = Ember.$(window).scrollTop();
-					if (scrollTop > 150) {
-						Ember.$('#back-to-top').addClass('show');
-					} else {
-						Ember.$('#back-to-top').removeClass('show');
-					}
-				});
-			});
-
-			Ember.$('body').on('click', '#back-to-top', function (e) {
-				run(() => {
-					e.preventDefault();
-					Ember.$('html,body').animate({
-						scrollTop: 0
-					}, 300);
-				});
-			});
 		});
 	},
 
