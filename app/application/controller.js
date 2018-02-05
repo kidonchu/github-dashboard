@@ -40,7 +40,7 @@ export default Controller.extend({
 					if( target.length ) {
 						e.preventDefault();
 						Ember.$('html, body').stop().animate({
-							scrollTop: target.offset().top - 80
+							scrollTop: target.offset().top - 30
 						}, 300);
 					}
 				});
