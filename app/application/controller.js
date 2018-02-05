@@ -17,12 +17,14 @@ export default Controller.extend({
 	store: service(),
 
 	pulls: [],
+	mergedPulls: [],
 
 	state: '',
 	author: '',
 	team: '',
 
-	loading: true,
+	loadingPulls: true,
+	loadingMergedPulls: false,
 
 	stateOptions: ['approved', 'changes_requested', 'waiting'],
 	teamOptions: ENV.TEAM_FILTERS,
@@ -67,56 +69,18 @@ export default Controller.extend({
 	 * @type {Model.Pull[]}
 	 */
 	filteredPulls: computed(
-		'author', 'state', 'team', 'pulls.@each.state',
-		'pulls.[]', 'pulls.@each.authorLogin', 'pulls.@each.repoName',
+		'pulls.[]', 'pulls.@each.state',
+		'pulls.@each.authorLogin', 'pulls.@each.repoName',
 		function() {
 
-			// apply whitelist filters
-			let pulls = this.get('pulls').filter((pull) =>  {
+			let pulls = this.applyWhitelistFilters(this.get('pulls'));
 
-				// repo filter
-				if(ENV.DEFAULT_REPO_FILTERS.indexOf(pull.get('repoName')) !== -1) {
-					return true;
+			pulls = pulls.filter((pull) =>  {
+				if (pull.get('isMerged') || pull.get('isClosed')) {
+					return false;
 				}
-
-				// author filter
-				if(ENV.DEFAULT_USER_FILTERS.indexOf(pull.get('authorLogin')) !== -1) {
-					return true;
-				}
-
-				return false;
+				return true;
 			});
-
-			if(this.get('author') || this.get('state') || this.get('team')) {
-				// apply user-applied filters
-				pulls = pulls.filter((pull) => {
-
-					let isMatch = true;
-
-					if(this.get('state')) {
-						// status filter
-						if(this.get('state') !== pull.get('state')) {
-							isMatch = false;
-						}
-					}
-
-					if(this.get('author')) {
-						// author filter
-						if(!pull.get('authorLogin') || this.get('author') !== pull.get('authorLogin')) {
-							isMatch = false;
-						}
-					}
-
-					if(this.get('team')) {
-						let users = ENV.USERS_IN_TEAMS[this.get('team')];
-						if(users.indexOf(pull.get('authorLogin')) === -1) {
-							isMatch = false;
-						}
-					}
-
-					return isMatch;
-				});
-			}
 
 			pulls = pulls.sort((a, b) => {
 				if(a.get('state') !== b.get('state')) {
@@ -124,6 +88,30 @@ export default Controller.extend({
 				}
 				if(a.get('updatedAt') !== b.get('updatedAt')) {
 					return (a.get('updatedAt') > b.get('updatedAt')) ? 1 : -1;
+				}
+				return 0;
+			});
+
+			return pulls;
+		}
+	),
+
+	filteredMergedPulls: computed(
+		'mergedPulls.[]', 'mergedPulls.@each.authorLogin', 'mergedPulls.@each.repoName',
+		function() {
+
+			let pulls = this.applyWhitelistFilters(this.get('mergedPulls'));
+
+			pulls = pulls.filter((pull) =>  {
+				if (pull.get('isMerged')) {
+					return true;
+				}
+				return false;
+			});
+
+			pulls = pulls.sort((a, b) => {
+				if(a.get('mergedAt') !== b.get('mergedAt')) {
+					return (a.get('mergedAt') < b.get('mergedAt')) ? 1 : -1;
 				}
 				return 0;
 			});
@@ -143,6 +131,24 @@ export default Controller.extend({
 	waitingPulls: computed('filteredPulls.[]', function() {
 		return this.get('filteredPulls').filterBy('isWaiting');
 	}),
+
+	applyWhitelistFilters(pulls) {
+
+		return pulls.filter((pull) =>  {
+
+			// repo filter
+			if(ENV.DEFAULT_REPO_FILTERS.indexOf(pull.get('repoName')) !== -1) {
+				return true;
+			}
+
+			// author filter
+			if(ENV.DEFAULT_USER_FILTERS.indexOf(pull.get('authorLogin')) !== -1) {
+				return true;
+			}
+
+			return false;
+		});
+	},
 
 	actions: {
 		onStateFilterChange(state) {

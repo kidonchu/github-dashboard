@@ -2,22 +2,11 @@
 @import 'body';
 @import 'node_modules/gridlex/src/gridlex';
 @import 'components/pull-card';
+@import 'components/merged-pull-card';
 @import 'ember-power-select';
 
 a {
 	text-decoration: none;
-}
-
-.mainnav {
-	background-color: #fff;
-	position: fixed;
-	top: 0;
-	left: 0;
-	padding: 10px;
-	width: 100%;
-	z-index: 1;
-	border-bottom: 1px solid rgba(0,0,0,.0975);
-	display: none;
 }
 
 .loader {
@@ -30,22 +19,48 @@ a {
 	color: #999;
 	text-transform: uppercase;
 	position: fixed;
-	left: 50%;
-	top: 0;
+	left: 30px;
+	bottom: 0;
 	width: 150px;
 	padding: 10px 0;
-	transform: translateX(-50%);
 	border: 0 1px 1px 1px solid $grey-light-100;
 	background-color: $grey-light-40;
+	margin-bottom: 5px;
+	text-align: center;
 }
 
-.pulls {
-	padding-top: 20px;
-	margin: 0 auto;
-	max-width: 800px;
-	position: relative;
-}
+.section-header {
 
-.ember-power-select-trigger {
-	cursor: pointer;
+	clear: both;
+	margin-bottom: .5em;
+
+	.section-title {
+		color: #666;
+		font-size: 1.5em;
+		float: left;
+		margin-bottom: .5em;
+	}
+
+	.reload-btn {
+		float: right;
+		cursor: pointer;
+		display: inline-block;
+		transition: all 0.3s;
+		border: 1px solid $blue-80;
+		border-radius: 5px;
+		background-color: $blue-60;
+		line-height: 1em;
+		padding: 2px;
+
+		.icon {
+			fill: white;
+		}
+
+		&:hover, &:active {
+			background-color: #fff;
+			.icon {
+				fill: $grey-dark-20;
+			}
+		}
+	}
 }

@@ -1,0 +1,43 @@
+.components_merged-pull-card {
+	margin-bottom: 5px;
+	border-radius: 3px;
+	border: 1px solid #e6e6e6;
+	background-color: white;
+	font-size: .8em;
+	padding: 5px;
+	color: #757575;
+
+	a, a:visited {
+		color: #757575;
+	}
+	a:hover {
+		color: #424242;
+	}
+
+	.avatar {
+
+		display: block;
+
+		img {
+			width: 40px;
+			height: 40px;
+			border: 1px solid rgba(0,0,0,.0975);
+			border-radius: 50%;
+		}
+	}
+
+	.info {
+		font-size: .8em;
+	}
+
+	.mergedAt {
+		text-align: right;
+	}
+
+	.title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-weight: bold;
+	}
+}

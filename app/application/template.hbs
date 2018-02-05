@@ -1,59 +1,15 @@
-<nav class="mainnav">
-	<div class="grid-noBottom">
-		<div class="col-4">
-			<h5 class="mb0">Github Dashboard</h5>
-		</div>
-		<div class="col">
-		</div>
-		<div class="col-2">
-			<div class="filter">
-				{{#power-select
-					allowClear=true
-					placeholder="State"
-					options=stateOptions
-					selected=state
-					onchange=(action 'onStateFilterChange')
-					verticalPosition='below'
-					as |state|
-				}}
-					{{state}}
-				{{/power-select}}
-			</div>
-		</div>
-		<div class="col-2">
-			<div class="filter">
-				{{#power-select
-					allowClear=true
-					placeholder="Team"
-					options=teamOptions
-					selected=team
-					onchange=(action 'onTeamFilterChange')
-					verticalPosition='below'
-					as |team|
-				}}
-				{{team}}
-			{{/power-select}}
-			</div>
-		</div>
-		<div class="col-3">
-			<div class="filter">
-				{{#power-select
-					allowClear=true
-					placeholder="Author"
-					options=authorOptions
-					selected=author
-					onchange=(action 'onAuthorFilterChange')
-					verticalPosition='below'
-					as |author|
-				}}
-				{{author}}
-			{{/power-select}}
-			</div>
-		</div>
+<div class="grid">
+<section class="col-8 pulls">
+	<div class="section-header">
+		<h2 class="section-title">Open</h2>
+		<span class="reload-btn btn" {{action (route-action 'loadPulls')}}>
+			{{svg-icon
+				iconId='sync'
+			}}
+		</span>
+		<div class="clearfix"></div>
 	</div>
-</nav>
-<section class="pulls">
-	{{#if loading}}
+	{{#if loadingPulls}}
 		<div class="loader mt100"></div>
 	{{else}}
 		<div class="grid-noBottom">
@@ -93,6 +49,31 @@
 		</div>
 	{{/if}}
 </section>
+<section class="col-4">
+	<div class="section-header">
+		<h2 class="section-title">Merged</h2>
+		<span class="reload-btn btn" {{action (route-action 'loadMergedPulls')}}>
+			{{svg-icon
+				iconId='sync'
+			}}
+		</span>
+		<div class="clearfix"></div>
+	</div>
+	{{#if loadingMergedPulls}}
+		<div class="loader mt100"></div>
+	{{else}}
+		<div class="grid-noBottom">
+			{{#each filteredMergedPulls as |pull|}}
+				<div class="col-12">
+					{{merged-pull-card
+						pull=pull
+					}}
+				</div>
+			{{/each}}
+		</div>
+	{{/if}}
+</section>
+</div>
 <div class="totals">
 	<a class="anchor-link" href="#approved-pulls">
 		<span class="green pill"><strong>{{numApproved}}</strong></span>
