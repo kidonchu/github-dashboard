@@ -14,26 +14,36 @@ export default DS.JSONAPISerializer.extend({
 	},
 
 	doNormalize(payload) {
+
+		let repo = payload.base.repo;
+		let user = payload.user;
+
 		return {
-			id: payload.full_name,
-			type: 'repository',
+			id: `${repo.name}-${payload.number}`,
+			type: 'merged-pull',
 			attributes: {
-				'full-name': payload.full_name,
-				name: payload.name,
+				number: payload.number,
+				title: payload.title,
 				'html-url': payload.html_url,
+				'created-at': payload.created_at,
+				'updated-at': payload.updated_at,
+				'merged-at': payload.merged_at,
+				'closed-at': payload.closed_at,
 			},
 			relationships: {
-				pulls: {
-					links: {
-						related: trimHost(payload.url) + '/pulls?per_page=100'
+				repo: {
+					data: {
+						type: 'repository',
+						id: payload.base.repo.full_name,
 					}
 				},
-				'merged-pulls': {
-					links: {
-						related: trimHost(payload.url) + '/pulls?per_page=20&state=closed'
+				author: {
+					data: {
+						type: 'user',
+						id: user.login,
 					}
 				},
 			}
 		};
-	}
+	},
 });

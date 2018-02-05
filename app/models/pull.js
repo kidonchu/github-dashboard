@@ -36,7 +36,7 @@ export default DS.Model.extend({
 	mergedAt: DS.attr('date'),
 	closedAt: DS.attr('date'),
 
-	repo: DS.belongsTo('repository', {async: true, inverse: 'pulls'}),
+	repo: DS.belongsTo('repository', {async: true}),
 	author: DS.belongsTo('user', {async: true}),
 	reviews: DS.hasMany('review', {async: true}),
 	issueComments: DS.hasMany('comment', {async: true}),
