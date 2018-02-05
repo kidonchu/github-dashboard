@@ -6,6 +6,8 @@ const { allSettled, Promise } = Ember.RSVP;
 
 export default Route.extend({
 
+	repos: [],
+
 	model() {
 		return new Promise((resolve, reject) => {
 			this.store.findRecord('organization', ENV.ORGANIZATION).then(org => {
@@ -25,8 +27,6 @@ export default Route.extend({
 	 */
 	setupController(controller, model) {
 
-		controller.set('loading', true);
-
 		let repos = model.filter(function(repo) {
 			if(ENV.WHITELISTED_REPOS.indexOf(repo.get('name')) === -1) {
 				return false;
@@ -34,10 +34,20 @@ export default Route.extend({
 			return true;
 		});
 
+		this.set('repos', repos);
+
+		this.loadMergedPulls();
+		this.loadPulls();
+	},
+
+	loadPulls() {
+		let controller = this.get('controller');
+		controller.set('loadingPulls', true);
+
 		// make sure all repos' pulls are fetched before doing anything
 		let promises = [];
-		repos.forEach(function(repo) {
-			promises.push(repo.get('pulls'));
+		this.get('repos').forEach(function(repo) {
+			promises.push(repo.get('pulls').reload());
 		});
 
 		allSettled(promises).then((hash) => {
@@ -46,7 +56,27 @@ export default Route.extend({
 				pulls = pulls.concat(promise.value.toArray());
 			});
 			controller.set('pulls', pulls);
-			controller.set('loading', false);
+			controller.set('loadingPulls', false);
+		});
+	},
+
+	loadMergedPulls() {
+		let controller = this.get('controller');
+		controller.set('loadingMergedPulls', true);
+
+		// make sure all repos' pulls are fetched before doing anything
+		let promises = [];
+		this.get('repos').forEach(function(repo) {
+			promises.push(repo.get('mergedPulls').reload());
+		});
+
+		allSettled(promises).then((hash) => {
+			let pulls = [];
+			hash.forEach((promise) => {
+				pulls = pulls.concat(promise.value.toArray());
+			});
+			controller.set('mergedPulls', pulls);
+			controller.set('loadingMergedPulls', false);
 		});
 	},
 
@@ -62,5 +92,13 @@ export default Route.extend({
 
 			return newComment.save();
 		},
+
+		loadPulls() {
+			this.loadPulls();
+		},
+
+		loadMergedPulls() {
+			this.loadMergedPulls();
+		}
 	},
 });
