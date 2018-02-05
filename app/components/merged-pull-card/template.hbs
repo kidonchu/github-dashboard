@@ -1,19 +1,23 @@
-<div class="grid-noBottom">
+<div class="grid-noBottom-noGutter-top">
 	<div class="col-1">
 		<a href="{{pull.author.htmlUrl}}" target="_blank" class="avatar">
 			<img src="{{pull.author.avatarUrl}}" alt="avatar">
 		</a>
 	</div>
 	<div class="col-11">
-		<div class="info">
-			<a href="{{pull.repo.htmlUrl}}" target="_blank">#{{pull.repo.name}}</a>
-			<a href="{{pull.htmlUrl}}" target="_blank">#{{pull.number}}</a>
-			<div class="mergedAt">
-				Merged {{moment-from-now pull.mergedAt}}
+		<div class="details">
+			<div class="grid-noBottom">
+				<div class="col-6 tags">
+					<a href="{{pull.repo.htmlUrl}}" target="_blank">#{{pull.repo.name}}</a>
+					<a href="{{pull.htmlUrl}}" target="_blank">#{{pull.number}}</a>
+				</div>
+				<div class="col-6 merged-at">
+					Merged {{moment-from-now pull.mergedAt}}
+				</div>
 			</div>
-		</div>
-		<div class="title">
-			<a href="{{pull.htmlUrl}}" target="_blank">{{pull.title}}</a>
+			<div class="title">
+				<a href="{{pull.htmlUrl}}" target="_blank">{{pull.title}}</a>
+			</div>
 		</div>
 	</div>
 </div>

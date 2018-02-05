@@ -4,8 +4,9 @@
 	border: 1px solid #e6e6e6;
 	background-color: white;
 	font-size: .8em;
-	padding: 5px;
+	padding: 5px 5px 0;
 	color: #757575;
+	overflow: hidden;
 
 	a, a:visited {
 		color: #757575;
@@ -17,20 +18,24 @@
 	.avatar {
 
 		display: block;
+		padding-top: 2px;
 
 		img {
-			width: 40px;
-			height: 40px;
+			width: 100%;
 			border: 1px solid rgba(0,0,0,.0975);
 			border-radius: 50%;
 		}
 	}
 
-	.info {
+	.details {
+		padding-left: 10px;
+	}
+
+	.tags, .merged-at {
 		font-size: .8em;
 	}
 
-	.mergedAt {
+	.merged-at {
 		text-align: right;
 	}
 
@@ -39,5 +44,6 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		font-weight: bold;
+		line-height: 1em;
 	}
 }
