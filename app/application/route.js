@@ -36,7 +36,6 @@ export default Route.extend({
 
 		this.set('repos', repos);
 
-		this.loadMergedPulls();
 		this.loadPulls();
 	},
 
