@@ -6,4 +6,5 @@ export default DS.Model.extend({
 	htmlUrl: DS.attr('string'),
 
 	pulls: DS.hasMany('pull', { async: true }),
+	mergedPulls: DS.hasMany('pull', { async: true, inverse: null }),
 });

@@ -28,6 +28,8 @@ export default DS.JSONAPISerializer.extend({
 				'html-url': payload.html_url,
 				'created-at': payload.created_at,
 				'updated-at': payload.updated_at,
+				'merged-at': payload.merged_at,
+				'closed-at': payload.closed_at,
 			},
 			relationships: {
 				repo: {

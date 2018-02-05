@@ -33,8 +33,10 @@ export default DS.Model.extend({
 	body: DS.attr('string'),
 	createdAt: DS.attr('date'),
 	updatedAt: DS.attr('date'),
+	mergedAt: DS.attr('date'),
+	closedAt: DS.attr('date'),
 
-	repo: DS.belongsTo('repository', {async: true}),
+	repo: DS.belongsTo('repository', {async: true, inverse: 'pulls'}),
 	author: DS.belongsTo('user', {async: true}),
 	reviews: DS.hasMany('review', {async: true}),
 	issueComments: DS.hasMany('comment', {async: true}),
@@ -64,6 +66,14 @@ export default DS.Model.extend({
 
 	isWaiting: computed('isApproved', 'isChangesRequested', function() {
 		return !this.get('isApproved') && !this.get('isChangesRequested');
+	}),
+
+	isMerged: computed('mergedAt', function() {
+		return !!this.get('mergedAt');
+	}),
+
+	isClosed: computed('closedAt', function() {
+		return !!this.get('closedAt');
 	}),
 
 	state: computed(
