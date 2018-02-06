@@ -4,7 +4,7 @@
 	border: 1px solid #e6e6e6;
 	background-color: white;
 	font-size: .8em;
-	padding: 5px 5px 0;
+	padding: 5px;
 	color: #757575;
 	overflow: hidden;
 
@@ -17,13 +17,16 @@
 
 	.avatar {
 
-		display: block;
-		padding-top: 2px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
 		img {
 			width: 100%;
 			border: 1px solid rgba(0,0,0,.0975);
 			border-radius: 50%;
+			max-height: 34px;
+			max-width: 34px;
 		}
 	}
 
@@ -44,6 +47,6 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		font-weight: bold;
-		line-height: 1em;
+		line-height: 1.1em;
 	}
 }

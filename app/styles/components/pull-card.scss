@@ -5,7 +5,6 @@
 	border: 1px solid #e6e6e6;
 	background-color: white;
 	font-size: 14px;
-	line-height: 18px;
 }
 
 .components_pull-card_header {
@@ -21,6 +20,7 @@
 	}
 
 	.avatar {
+
 		display: flex;
 		height: 100%;
 		align-items: center;
@@ -28,10 +28,11 @@
 
 		img {
 			display: block;
-			width: 40px;
-			height: 40px;
+			width: 100%;
 			border: 1px solid rgba(0,0,0,.0975);
 			border-radius: 50%;
+			max-height: 45px;
+			max-width: 45px;
 		}
 	}
 
@@ -58,6 +59,7 @@
 	padding: 16px 16px 16px 21px;
 	color: #212121;
 	border-bottom: 1px solid #efefef;
+	line-height: 1.3em;
 
 	a, a:visited {
 		color: #757575;
@@ -92,6 +94,7 @@
 
 .components_pull-card__footer {
 	padding: 0 16px 0 21px;
+	line-height: 1.3em;
 
 	.comments {
 		margin-bottom: 4px;

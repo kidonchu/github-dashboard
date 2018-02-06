@@ -7,12 +7,12 @@
 	<div class="col-11">
 		<div class="details">
 			<div class="grid-noBottom">
-				<div class="col-6 tags">
+				<div class="col-8 tags">
 					<a href="{{pull.repo.htmlUrl}}" target="_blank">#{{pull.repo.name}}</a>
 					<a href="{{pull.htmlUrl}}" target="_blank">#{{pull.number}}</a>
 				</div>
-				<div class="col-6 merged-at">
-					Merged {{moment-from-now pull.mergedAt}}
+				<div class="col-4 merged-at">
+					{{moment-from-now pull.mergedAt}}
 				</div>
 			</div>
 			<div class="title">
