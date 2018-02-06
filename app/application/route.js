@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from 'github-dashboard/config/environment';
 
-const { Route } = Ember;
+const { Route, run } = Ember;
 const { allSettled, Promise } = Ember.RSVP;
 
 export default Route.extend({
@@ -37,16 +37,18 @@ export default Route.extend({
 		this.set('repos', repos);
 
 		this.loadPulls();
+		this.loadMergedPulls();
 	},
 
 	loadPulls() {
+
 		let controller = this.get('controller');
 		controller.set('loadingPulls', true);
 
 		// make sure all repos' pulls are fetched before doing anything
 		let promises = [];
 		this.get('repos').forEach(function(repo) {
-			promises.push(repo.get('pulls').reload());
+			promises.push(repo.get('pulls'));
 		});
 
 		allSettled(promises).then((hash) => {
@@ -66,7 +68,7 @@ export default Route.extend({
 		// make sure all repos' pulls are fetched before doing anything
 		let promises = [];
 		this.get('repos').forEach(function(repo) {
-			promises.push(repo.get('mergedPulls').reload());
+			promises.push(repo.get('mergedPulls'));
 		});
 
 		allSettled(promises).then((hash) => {
@@ -90,10 +92,6 @@ export default Route.extend({
 			});
 
 			return newComment.save();
-		},
-
-		loadPulls() {
-			this.loadPulls();
 		},
 
 		loadMergedPulls() {
