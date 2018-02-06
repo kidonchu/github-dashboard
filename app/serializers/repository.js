@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import ENV from 'github-dashboard/config/environment';
 
 function trimHost(str) {
 	return str.replace('https://api.github.com', '');
@@ -14,7 +15,7 @@ export default DS.JSONAPISerializer.extend({
 	},
 
 	doNormalize(payload) {
-		return {
+		let normalized = {
 			id: payload.full_name,
 			type: 'repository',
 			attributes: {
@@ -25,15 +26,24 @@ export default DS.JSONAPISerializer.extend({
 			relationships: {
 				pulls: {
 					links: {
-						related: trimHost(payload.url) + '/pulls?per_page=100'
-					}
-				},
-				'merged-pulls': {
-					links: {
-						related: trimHost(payload.url) + '/pulls?per_page=20&state=closed'
+						related: trimHost(payload.url) + '/pulls?per_page=100&sort=updated&direction=desc'
 					}
 				},
 			}
 		};
+
+		let numMergedPulls = ENV.NUM_MERGED_PULLS['default'];
+		if (ENV.NUM_MERGED_PULLS[payload.name]) {
+			numMergedPulls = ENV.NUM_MERGED_PULLS[payload.name];
+		}
+
+		let mergedPullsUrl = trimHost(payload.url) + '/pulls?state=closed&sort=updated&direction=desc';
+		mergedPullsUrl += '&per_page=' + numMergedPulls;
+
+		normalized.relationships['merged-pulls'].links = {
+			related: mergedPullsUrl
+		};
+
+		return normalized;
 	}
 });

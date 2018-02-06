@@ -10,6 +10,10 @@ module.exports = {
 	DEFAULT_USER_FILTERS: [
 		'kidonchu', 'kvann'
 	],
+	NUM_MERGED_PULLS: {
+		gitcli: 30,
+		default: 5,
+	},
 	TEAM_FILTERS: [
 		'Dev'
 	],
