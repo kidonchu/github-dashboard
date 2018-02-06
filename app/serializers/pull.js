@@ -1,8 +1,5 @@
 import DS from 'ember-data';
-
-function trimHost(str) {
-	return str.replace('https://api.github.com', '');
-}
+import {trimHost} from 'github-dashboard/helpers/github';
 
 export default DS.JSONAPISerializer.extend({
 

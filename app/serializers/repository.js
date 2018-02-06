@@ -1,9 +1,6 @@
 import DS from 'ember-data';
 import ENV from 'github-dashboard/config/environment';
-
-function trimHost(str) {
-	return str.replace('https://api.github.com', '');
-}
+import {trimHost} from 'github-dashboard/helpers/github';
 
 export default DS.JSONAPISerializer.extend({
 
@@ -40,8 +37,10 @@ export default DS.JSONAPISerializer.extend({
 		let mergedPullsUrl = trimHost(payload.url) + '/pulls?state=closed&sort=updated&direction=desc';
 		mergedPullsUrl += '&per_page=' + numMergedPulls;
 
-		normalized.relationships['merged-pulls'].links = {
-			related: mergedPullsUrl
+		normalized.relationships['merged-pulls'] = {
+			links: {
+				related: mergedPullsUrl
+			}
 		};
 
 		return normalized;

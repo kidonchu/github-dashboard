@@ -1,9 +1,5 @@
 import DS from 'ember-data';
 
-function trimHost(str) {
-	return str.replace('https://api.github.com', '');
-}
-
 export default DS.JSONAPISerializer.extend({
 
 	normalizeFindHasManyResponse(store, primaryModelClass, payload, id, requestType){
