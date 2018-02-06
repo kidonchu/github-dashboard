@@ -1,5 +1,5 @@
 <div class="grid-center">
-<section class="col-5_lg-7_md-8 pulls">
+<section class="col-5_lg-7_md-8_xs-12 pulls">
 	<div class="section-header">
 		<h2 class="section-title">Open</h2>
 		<div class="clearfix"></div>
@@ -44,7 +44,7 @@
 		</div>
 	{{/if}}
 </section>
-<section class="col-4">
+<section class="col-4_xs-12">
 	<div class="section-header">
 		<h2 class="section-title">Merged</h2>
 		<div class="clearfix"></div>
@@ -52,21 +52,15 @@
 	{{#if loadingMergedPulls}}
 		<div class="loader mt100"></div>
 	{{else}}
-		{{#if filteredMergedPulls}}
-			<div class="grid-noBottom">
-				{{#each filteredMergedPulls as |pull|}}
-					<div class="col-12">
-						{{merged-pull-card
-							pull=pull
-						}}
-					</div>
-				{{/each}}
-			</div>
-		{{else}}
-			<div class="reload-btn" {{action (route-action 'loadMergedPulls')}}>
-				Load Merged Pulls
-			</div>
-		{{/if}}
+		<div class="grid-noBottom">
+			{{#each filteredMergedPulls as |pull|}}
+				<div class="col-12">
+					{{merged-pull-card
+						pull=pull
+					}}
+				</div>
+			{{/each}}
+		</div>
 	{{/if}}
 </section>
 </div>
