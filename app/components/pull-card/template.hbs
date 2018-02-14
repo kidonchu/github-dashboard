@@ -9,7 +9,7 @@
 			<div class="info">
 				<div class="grid-noBottom">
 					<div class="col-8">
-						<a href="{{pull.repo.htmlUrl}}" target="_blank">#{{pull.repo.name}}</a>
+						<a href="{{pull.repoUrl}}" target="_blank">#{{pull.repoName}}</a>
 						<a href="{{pull.htmlUrl}}" target="_blank">#{{pull.number}}</a>
 					</div>
 					<div class="col-4 createdAt">
@@ -70,10 +70,16 @@
 		</ul>
 	</div>
 	<div class="updatedAt">
-		{{#if lastComment}}
-			{{moment-from-now lastComment.createdAt}}
+		{{#if pull.isMerged}}
+			Merged {{moment-from-now pull.mergedAt}}
+		{{else if isClosed}}
+			Closed {{moment-from-now pull.closedAt}}
 		{{else}}
-			{{moment-from-now pull.updatedAt}}
+			{{#if lastComment}}
+				Last commented {{moment-from-now lastComment.createdAt}}
+			{{else}}
+				Updated {{moment-from-now pull.updatedAt}}
+			{{/if}}
 		{{/if}}
 	</div>
 	<section class="components_pull-card__add-comment">
