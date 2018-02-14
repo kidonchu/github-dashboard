@@ -131,7 +131,7 @@
 }
 
 .components_pull-card__add-comment {
-	padding: 16px 26px 16px 0;
+	padding: 16px 0;
 	margin-top: 4px;
 	min-height: 56px;
 	justify-content: center;
@@ -139,15 +139,18 @@
 	border-top: 1px solid #efefef;
 	color: #999;
 
-	textarea {
+	input[type='text'] {
 		border: none;
 		color: #262626;
-		max-height: 80px;
 		outline: none;
 		padding: 0;
-		resize: none;
+		font-family: inherit;
 		font-size: inherit;
 		width: 100%;
+
+		&::-webkit-calendar-picker-indicator {
+			display: none;
+		}
 	}
 }
 
