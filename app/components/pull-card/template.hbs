@@ -75,10 +75,13 @@
 		{{/if}}
 	</div>
 	<section class="components_pull-card__add-comment">
-		{{textarea
-			placeholder='Add a comment...'
+		{{input
+			type='text'
 			value=commentValue
-			keyDown=(action 'onCommentKeyDown')
+			class='awesomplete'
+			placeholder='Add a comment...'
+			keyUp=(action 'onCommentKeyUp')
+			list='autocomplete-users'
 		}}
 	</section>
 </div>

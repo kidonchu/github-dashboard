@@ -75,3 +75,8 @@
 		<span class="grey pill"><strong>{{numWaiting}}</strong></span>
 	</a>
 </div>
+<datalist id="autocomplete-users">
+{{#each autocompleteUsersOptions as |user|}}
+	<option value="{{user.value}}">{{user.label}}</option>
+{{/each}}
+</datalist>

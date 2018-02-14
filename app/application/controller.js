@@ -50,6 +50,16 @@ export default Controller.extend({
 
 	numPulls: computed.alias('filteredPulls.length'),
 
+	autocompleteUsersOptions: computed(function() {
+		let a = ENV.AUTOCOMPLETE_USERS_LIST.map((user) => {
+			return Ember.Object.create({
+				label: '@' + user.name,
+				value: '@' + user.login
+			});
+		});
+		return a;
+	}),
+
 	numApproved: computed('approvedPulls.[]', function() {
 		return this.get('approvedPulls').length;
 	}),

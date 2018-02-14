@@ -22,5 +22,11 @@ module.exports = {
 	],
 	USERS_IN_TEAMS: {
 		Dev: ['kidonchu'],
-	}
+	},
+	AUTOCOMPLETE_USERS_LIST: [
+		{
+			name: 'Kidon Chu',
+			login: 'kidonchu'
+		},
+	]
 };
