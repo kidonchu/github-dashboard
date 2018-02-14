@@ -147,7 +147,7 @@ export default Component.extend({
 			this.set('isShowingAllComments', true);
 		},
 
-		onCommentKeyDown(e) {
+		onCommentKeyUp(e) {
 			// Ctrl + Enter
 			if(e.keyCode === 13 && e.ctrlKey) {
 				if(!this.get('commentValue')) {
