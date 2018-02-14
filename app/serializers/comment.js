@@ -41,7 +41,7 @@ export default DS.JSONAPISerializer.extend({
 				pull: {
 					data: {
 						type: 'pull',
-						id: `${repo}-${number}`,
+						id: `${repo}:${number}`,
 					}
 				},
 			}

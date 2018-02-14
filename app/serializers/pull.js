@@ -23,7 +23,7 @@ export default DS.JSONAPISerializer.extend({
 		let user = payload.user;
 
 		return {
-			id: `${repo.name}-${payload.number}`,
+			id: `${repo.name}:${payload.number}`,
 			type: 'pull',
 			attributes: {
 				number: payload.number,
@@ -39,7 +39,7 @@ export default DS.JSONAPISerializer.extend({
 				repo: {
 					data: {
 						type: 'repository',
-						id: payload.base.repo.full_name,
+						id: payload.base.repo.full_name.replace('/', ':'),
 					}
 				},
 				author: {

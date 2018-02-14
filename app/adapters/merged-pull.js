@@ -5,7 +5,7 @@ export default GithubPullAdapter.extend({
 
 	urlForFindRecord(id/*, modelName, snapshot */) {
 
-		let parts = id.split('-');
+		let parts = id.split(':');
 		let repo = parts[0];
 		let number = parts[1];
 
