@@ -1,5 +1,5 @@
 <div class="grid-center">
-<section class="col-5_lg-7_md-8_xs-12 pulls">
+<section class="col-7_md-8_xs-12 pulls">
 	<div class="section-header">
 		<h2 class="section-title">Open</h2>
 		<div class="clearfix"></div>
@@ -44,7 +44,26 @@
 		</div>
 	{{/if}}
 </section>
-<section class="col-4_xs-12">
+<section class="col-5_xs-12">
+	<div class="section-header">
+		<h2 class="section-title">Watching</h2>
+		<div class="clearfix"></div>
+	</div>
+	{{#if loadingWatchingPulls}}
+		<div class="loader mt100"></div>
+	{{else}}
+		<div class="grid-noBottom">
+			{{#each watchingPulls as |pull|}}
+				<div class="col-12">
+					{{pull-card
+						pull=pull
+						addComment=(route-action 'addComment')
+						showDescription=false
+					}}
+				</div>
+			{{/each}}
+		</div>
+	{{/if}}
 	<div class="section-header">
 		<h2 class="section-title">Merged</h2>
 		<div class="clearfix"></div>

@@ -8,15 +8,9 @@ export default Route.extend({
 
 	repos: [],
 
-	model() {
-		return new Promise((resolve, reject) => {
-			this.store.findRecord('organization', ENV.ORGANIZATION).then(org => {
-				org.get('repos').then((repos) => {
-					resolve(repos);
-				});
-			}).catch(err => reject(err));
-		});
-	},
+	watchingPulls: [
+		'Hosted:10827'
+	],
 
 	/**
 	 * Loads pull requests from whitelisted repos within the organization
@@ -25,39 +19,56 @@ export default Route.extend({
 	 * @param {Controller.Application} controller
 	 * @param {Promise} model
 	 */
-	setupController(controller, model) {
+	setupController() {
 
-		let repos = model.filter(function(repo) {
-			if(ENV.WHITELISTED_REPOS.indexOf(repo.get('name')) === -1) {
-				return false;
-			}
-			return true;
+		this._super(...arguments);
+
+		let promise = new Promise((resolve) => {
+			let repos = [];
+
+			this.store.findRecord('organization', ENV.ORGANIZATION).then(org => {
+				org.get('repos').then((repos) => {
+					repos = repos.filter((repo) => {
+						if(ENV.WHITELISTED_REPOS.indexOf(repo.get('name')) === -1) {
+							return false;
+						}
+						return true;
+					});
+					this.set('repos', repos);
+					resolve();
+				});
+			});
 		});
 
-		this.set('repos', repos);
-
-		this.loadPulls();
-		this.loadMergedPulls();
+		promise.then(() => {
+			this.loadPulls().then(() => {
+				this.loadMergedPulls();
+				this.loadWatchingPulls();
+			});
+		});
 	},
 
 	loadPulls() {
+		return new Promise((resolve) => {
+			let controller = this.get('controller');
+			controller.set('loadingPulls', true);
 
-		let controller = this.get('controller');
-		controller.set('loadingPulls', true);
-
-		// make sure all repos' pulls are fetched before doing anything
-		let promises = [];
-		this.get('repos').forEach(function(repo) {
-			promises.push(repo.get('pulls'));
-		});
-
-		allSettled(promises).then((hash) => {
-			let pulls = [];
-			hash.forEach((promise) => {
-				pulls = pulls.concat(promise.value.toArray());
+			// make sure all repos' pulls are fetched before doing anything
+			let promises = [];
+			this.get('repos').forEach(function(repo) {
+				promises.push(repo.get('pulls'));
 			});
-			controller.set('pulls', pulls);
-			controller.set('loadingPulls', false);
+
+			allSettled(promises).then((hash) => {
+				let pulls = [];
+				hash.forEach((promise) => {
+					pulls = pulls.concat(promise.value.toArray());
+				});
+				controller.set('pulls', pulls);
+				controller.set('loadingPulls', false);
+			}).then(() => {
+				resolve();
+			});
 		});
 	},
 
@@ -78,6 +89,26 @@ export default Route.extend({
 			});
 			controller.set('mergedPulls', pulls);
 			controller.set('loadingMergedPulls', false);
+		});
+	},
+
+	loadWatchingPulls() {
+		let controller = this.get('controller');
+		controller.set('loadingWatchingPulls', true);
+
+		// make sure all repos' pulls are fetched before doing anything
+		let promises = [];
+		this.get('watchingPulls').forEach((watching) => {
+			promises.push(this.get('store').findRecord('pull', watching));
+		});
+
+		allSettled(promises).then((hash) => {
+			let pulls = [];
+			hash.forEach((promise) => {
+				pulls = pulls.concat(promise.value);
+			});
+			controller.set('watchingPulls', pulls);
+			controller.set('loadingWatchingPulls', false);
 		});
 	},
 

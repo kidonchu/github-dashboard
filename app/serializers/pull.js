@@ -3,6 +3,13 @@ import {trimHost} from 'github-dashboard/helpers/github';
 
 export default DS.JSONAPISerializer.extend({
 
+	normalizeFindRecordResponse(store, primaryModelClass, payload, id, requestType) {
+		let jsonPayload = {
+			data: this.doNormalize(payload)
+		};
+		return this._super(store, primaryModelClass, jsonPayload, id, requestType);
+	},
+
 	normalizeFindHasManyResponse(store, primaryModelClass, payload, id, requestType){
 		let jsonPayload = {
 			data: payload.map(this.doNormalize)

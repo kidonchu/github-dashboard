@@ -18,13 +18,15 @@ export default Controller.extend({
 
 	pulls: [],
 	mergedPulls: [],
+	watchingPulls: [],
 
 	state: '',
 	author: '',
 	team: '',
 
 	loadingPulls: true,
-	loadingMergedPulls: false,
+	loadingMergedPulls: true,
+	loadingWatchingPulls: true,
 
 	stateOptions: ['approved', 'changes_requested', 'waiting'],
 	teamOptions: ENV.TEAM_FILTERS,
@@ -107,7 +109,7 @@ export default Controller.extend({
 	),
 
 	filteredMergedPulls: computed(
-		'mergedPulls.[]', 'mergedPulls.@each.authorLogin', 'mergedPulls.@each.repoName',
+		'mergedPulls.@each.id', 'mergedPulls.@each.authorLogin', 'mergedPulls.@each.repoName',
 		function() {
 
 			let pulls = this.applyWhitelistFilters(this.get('mergedPulls'));

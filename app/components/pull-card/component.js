@@ -10,6 +10,8 @@ export default Component.extend({
 	tagName: 'article',
 	classNames: ['components_pull-card'],
 
+	showDescription: true,
+
 	commentValue: '',
 
 	/**
