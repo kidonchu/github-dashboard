@@ -53,6 +53,11 @@ export default DS.JSONAPISerializer.extend({
 						related: trimHost(payload.url) + '/reviews?per_page=100',
 					}
 				},
+				statuses: {
+					links: {
+						related: trimHost(payload.statuses_url),
+					}
+				},
 				'issue-comments': {
 					links: {
 						related: trimHost(payload.comments_url) + '?per_page=100',

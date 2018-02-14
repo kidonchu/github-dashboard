@@ -129,6 +129,19 @@ export default Component.extend({
 		}
 	}),
 
+	testStatusClass: computed(
+		'pull.isStatusSuccess',
+		'pull.isStatusFailure',
+		function() {
+			if (this.get('pull.isStatusSuccess')) {
+				return 'green';
+			} else if (this.get('pull.isStatusFailure')) {
+				return 'red';
+			}
+			return 'yellow';
+		}
+	),
+
 	actions: {
 		showAllComments() {
 			this.set('isShowingAllComments', true);

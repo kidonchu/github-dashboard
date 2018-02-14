@@ -8,7 +8,7 @@
 }
 
 .components_pull-card_header {
-	padding: 16px 16px 16px 21px;
+	padding: 16px 21px;
 	color: #757575;
 	border-bottom: 1px solid #efefef;
 
@@ -182,6 +182,27 @@
 	}
 	&.yellow {
 		background-color: $orange;
+	}
+	&.grey {
+		background-color: $grey-dark-20;
+	}
+}
+
+.components_pull-card__test-status-bar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 5px;
+	height: 100%;
+
+	&.red {
+		background-color: $red;
+	}
+	&.green {
+		background-color: $green;
+	}
+	&.yellow {
+		background-color: $yellow;
 	}
 	&.grey {
 		background-color: $grey-dark-20;

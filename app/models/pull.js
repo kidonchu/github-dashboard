@@ -39,10 +39,12 @@ export default DS.Model.extend({
 	repo: DS.belongsTo('repository', {async: true}),
 	author: DS.belongsTo('user', {async: true}),
 	reviews: DS.hasMany('review', {async: true}),
+	statuses: DS.hasMany('status', {async: true}),
 	issueComments: DS.hasMany('comment', {async: true}),
 	reviewComments: DS.hasMany('review-comment', {async: true}),
 
 	repoName: computed.alias('repo.name'),
+	repoUrl: computed.alias('repo.htmlUrl'),
 	authorLogin: computed.alias('author.login'),
 
 	description: computed('body', function() {
@@ -86,6 +88,42 @@ export default DS.Model.extend({
 			} else {
 				return 'waiting';
 			}
+		}
+	),
+
+	sortedStatuses: computed(
+		'statuses.@each.id',
+		'statuses.isFulfilled',
+		'statuses.content.isLoaded',
+		function() {
+
+			if (!this.get('statuses.length')) {
+				return [];
+			}
+
+			let a = this.get('statuses').toArray().sort((a, b) => {
+				// sort by updatedAt DESC
+				if (a.get('updatedAt') === b.get('updatedAt')) {
+					return 0;
+				}
+				return a.get('updatedAt') < b.get('updatedAt') ? 1 : -1;
+			});
+
+			return a;
+		}
+	),
+
+	isStatusSuccess: computed(
+		'sortedStatuses.[]',
+		function() {
+			return this.get('sortedStatuses.firstObject.isSuccess');
+		}
+	),
+
+	isStatusFailure: computed(
+		'sortedStatuses.[]',
+		function() {
+			return this.get('sortedStatuses.firstObject.isFailure');
 		}
 	),
 });
