@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from 'github-dashboard/config/environment';
 
-const { Route, run } = Ember;
+const { Route } = Ember;
 const { allSettled, Promise } = Ember.RSVP;
 
 export default Route.extend({
@@ -24,8 +24,6 @@ export default Route.extend({
 		this._super(...arguments);
 
 		let promise = new Promise((resolve) => {
-			let repos = [];
-
 			this.store.findRecord('organization', ENV.ORGANIZATION).then(org => {
 				org.get('repos').then((repos) => {
 					repos = repos.filter((repo) => {
@@ -117,7 +115,7 @@ export default Route.extend({
 		addComment(pull, comment) {
 			let user = this.store.peekRecord('user', 'kidonchu');
 			let newComment = this.store.createRecord('comment', {
-				body: comment,
+				body: comment.trim(),
 				author: user,
 				pull: pull,
 			});
